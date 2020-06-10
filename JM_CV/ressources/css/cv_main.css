@@ -1,0 +1,34 @@
+body div:not(:first-child) {
+	margin: 5px 10px;
+}
+
+@media screen and (min-width: 900px) {
+	.card-group {
+		max-width: 60% !important;
+		margin: auto !important;
+	}
+	#header-bg {
+		padding: 20px;
+	}
+}
+
+#Profil {
+	border-radius: 20px;
+}
+
+#header-bg {
+	background-image: url('../img/bg/01.jpg');
+}
+
+body, .nav-link.active, .card {
+	background: rgba(0, 0, 0, 0.9) !important;
+	color: #fff !important;
+}
+
+a:link, a:visited, .tl_title {
+	color: rgb(127,255,0);
+}
+
+.card {
+	margin: 0px 5px !important;
+}
