@@ -21,7 +21,7 @@ body div:not(:first-child) {
 }
 
 body, .nav-link.active, .card {
-	background: rgba(0, 0, 0, 0.9) !important;
+	background: blue !important;
 	color: red !important;
 }
 
