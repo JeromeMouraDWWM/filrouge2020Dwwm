@@ -22,7 +22,7 @@ body div:not(:first-child) {
 
 body, .nav-link.active, .card {
 	background: rgba(0, 0, 0, 0.9) !important;
-	color: #fff !important;
+	color: red !important;
 }
 
 a:link, a:visited, .tl_title {
