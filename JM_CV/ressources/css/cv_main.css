@@ -21,8 +21,8 @@ body div:not(:first-child) {
 }
 
 body, .nav-link.active, .card {
-	background: blue !important;
-	color: red !important;
+	background: rgba(0, 0, 0, 0.9) !important;
+	color: #fff !important;
 }
 
 a:link, a:visited, .tl_title {
