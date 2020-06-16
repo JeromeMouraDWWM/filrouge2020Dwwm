@@ -1,8 +1,8 @@
 new Vue({
   el: '#body',
   data: {
-    show_st: false,
-    show_ro: false,
-    show_ac: false,
+    show_st: true,
+    show_ro: true,
+    show_ac: true,
   }
 })
