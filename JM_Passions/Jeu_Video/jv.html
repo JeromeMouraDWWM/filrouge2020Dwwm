@@ -6,18 +6,19 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content="Passion, Jeu Vidéo">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-	 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css"/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css"/>
 	<link rel="stylesheet" type="text/css" href="../css_commun.css">
+	<link rel="stylesheet" type="text/css" href="css_jv.css">
 </head>
 <body>
 	<div id="body">
 	
-		<div>
-			<!-- Introduction -->
+		<div id="Introduction" class="bg_general intro">
+			<h1>Ma Passion pour les jeux vidéos</h1>
 		</div>
 
 		<div v-on:click="show_st = !show_st">
-			<h1>Les Jeux de Grandes Stratégies</h1> <!-- Europa Universalis IV -->
+			<h2>Les Jeux de Grandes Stratégies</h2> <!-- Europa Universalis IV -->
 			<transition enter-active-class="animate__animated animate__fadeInLeft" leave-active-class="animate__animated animate__fadeOutRight" mode="out-in">
 				<div v-bind:key="show_st">
 					{{
@@ -31,8 +32,8 @@
 		</div>
 
 		<div v-on:click="show_ro = !show_ro">
-			<h1>Les Jeux de Rôles</h1>	<!-- Pokemon, Skyrim -->
-			<transition enter-active-class="animate__animated animate__fadeInLeft" leave-active-class="animate__animated animate__fadeOutRight" mode="out-in">
+			<h2>Les Jeux de Rôles</h2>	<!-- Pokemon, Skyrim -->
+			<transition enter-active-class="animate__animated animate__fadeInRight" leave-active-class="animate__animated animate__fadeOutLeft" mode="out-in">
 				<div v-bind:key="show_ro">
 					{{
 						show_ro ?
@@ -45,7 +46,7 @@
 		</div>
 
 		<div v-on:click="show_ac = !show_ac">
-			<h1>Les Jeux d'Action</h1> <!-- Monster Hunter -->
+			<h2>Les Jeux d'Action</h2> <!-- Monster Hunter -->
 			<transition enter-active-class="animate__animated animate__fadeInLeft" leave-active-class="animate__animated animate__fadeOutRight" mode="out-in">
 				<div v-bind:key="show_ac">
 					{{
