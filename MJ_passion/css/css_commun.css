@@ -1,0 +1,11 @@
+.bg_general {
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center center;
+	height: 100vh;
+}
+
+.intro {
+	text-align: center;
+	vertical-align: middle;
+}
