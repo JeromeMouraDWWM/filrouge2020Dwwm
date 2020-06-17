@@ -11,13 +11,16 @@
 	<link rel="stylesheet" type="text/css" href="css/css_jv.css">
 </head>
 <body>
-	<div id="body">
+	<div id="body" class="container-fluid">
 	
-		<div id="Introduction" class="bg_general intro">
-			<h1>Ma Passion pour les jeux vidéos</h1>
+		<div id="Introduction" class="bg_general intro row align-items-center">
+			<span>
+				<h1>Ma Passion pour les jeux vidéo</h1>
+				<p>Ce jeune mode de divertissement, né dans les années 50, est depuis les années 80 un secteur en pleine croissance qui a su se diversifier pour toucher un maximum de personne possible. Il en existe aujourd'hui de très nombreux genre et je vous présenterai dans cette page mes préférés.</p>
+			</span>
 		</div>
 
-		<div v-on:click="show_st = !show_st">
+		<div class="bg_general v-on:click=" show_st = "!show_st">
 			<h2>Les Jeux de Grandes Stratégies</h2> <!-- Europa Universalis IV -->
 			<transition enter-active-class="animate__animated animate__fadeInLeft" leave-active-class="animate__animated animate__fadeOutRight" mode="out-in">
 				<div v-bind:key="show_st">

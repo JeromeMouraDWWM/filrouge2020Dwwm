@@ -1,11 +1,18 @@
-.bg_general {
-	background-size: cover;
-	background-repeat: no-repeat;
-	background-position: center center;
-	height: 100vh;
+*{
+	font-family: Helvetica Neue;
 }
 
-.intro {
+.bg_general {
+	/*background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center center;*/
+	min-height: 100vh;
+}
+
+.intro, h2 {
 	text-align: center;
-	vertical-align: middle;
+}
+
+h1 {
+	width: 100%;
 }
