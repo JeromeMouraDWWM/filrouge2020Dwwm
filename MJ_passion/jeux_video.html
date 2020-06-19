@@ -4,7 +4,6 @@
 	<title>Ma passion pour les jeux vidéos</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="description" content="Passion, Jeu Vidéo">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css"/>
 	<link rel="stylesheet" type="text/css" href="css/css_commun.css">
@@ -13,21 +12,22 @@
 <body>
 	<div id="body" class="container-fluid">
 	
-		<div id="Introduction" class="bg_general intro row align-items-center">
+		<div id="Introduction" class="bg_general row align-items-center">
 			<span>
 				<h1>Ma Passion pour les jeux vidéo</h1>
-				<p>Ce jeune mode de divertissement, né dans les années 50, est depuis les années 80 un secteur en pleine croissance qui a su se diversifier pour toucher un maximum de personne possible. Il en existe aujourd'hui de très nombreux genre et je vous présenterai dans cette page mes préférés.</p>
+				<p class="intro">Ce jeune mode de divertissement, né dans les années 50, est depuis les années 80 un secteur en pleine croissance qui a su se diversifier pour toucher un maximum de personne possible. Il en existe aujourd'hui de très nombreux genre et je vous présenterai dans cette page mes préférés.</p>
 			</span>
 		</div>
 
 		<div class="bg_general">
 			<div class="row">
-				<h2>Les Jeux de Grandes Stratégies</h2> <!-- Europa Universalis IV -->
+				<h2>Les Jeux de Stratégies</h2> <!-- Europa Universalis IV / X-COM / Civilization / Stellaris -->
 			</div>
-			<div class="row align-items-center">
-				<div class="col-md-6" v-on:click="show_st = !show_st">
-					<transition enter-active-class="animate__animated animate__fadeInLeft" leave-active-class="animate__animated animate__fadeOutRight" mode="out-in">
+			<div class="row">
+				<div class="col-md-6 align-self-center" v-on:click="show_st = !show_st">
+					<transition enter-active-class="animate__animated animate__fadeInRight" leave-active-class="animate__animated animate__fadeOutLeft" mode="out-in">
 						<div v-bind:key="show_st">
+							<!-- Présentation du genre, puis de jeux -->
 						{{
 							show_st ?
 							"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
@@ -37,44 +37,174 @@
 						</div>
 					</transition>
 				</div>
-				<div class="col-md-6">
+				<div class="col-md-6 align-self-center">
 					<!-- Carousel -->
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+					<div id="carouselStrategie" class="carousel slide" data-ride="carousel">
+  						<ol class="carousel-indicators">
+  							<li data-target="#carouselStrategie" data-slide-to="0" class="active"></li>
+    						<li data-target="#carouselStrategie" data-slide-to="1"></li>
+    						<li data-target="#carouselStrategie" data-slide-to="2"></li>
+    						<li data-target="#carouselStrategie" data-slide-to="3"></li>
+  						</ol>
+  						<div class="carousel-inner">
+    						<div class="carousel-item active">
+      							<img class="d-block w-100" src="img/jv/eu4.jpg" alt="Europa Universalis 4">
+      							<div class="carousel-caption d-none d-md-block">
+    								<h5>Europa Universalis 4</h5>
+  								</div>
+    						</div>
+    						<div class="carousel-item">
+      							<img class="d-block w-100" src="img/jv/xcom2.jpg" alt="Xcom 2">
+      							<div class="carousel-caption d-none d-md-block">
+    								<h5>Xcom 2</h5>
+  								</div>
+    						</div>
+    						<div class="carousel-item">
+      							<img class="d-block w-100" src="img/jv/civ6.jpg" alt="Sid Meier's Civilization 6">
+      							<div class="carousel-caption d-none d-md-block">
+    								<h5>Sid Meier's Civilization 6</h5>
+  								</div>
+   							</div>
+   							<div class="carousel-item">
+      							<img class="d-block w-100" src="img/jv/stellaris.jpg" alt="Stellaris">
+      							<div class="carousel-caption d-none d-md-block">
+    								<h5>Stellaris</h5>
+  								</div>
+   							</div>
+  						</div>
+  						<a class="carousel-control-prev" href="#carouselStrategie" role="button" data-slide="prev">
+    						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    						<span class="sr-only">Previous</span>
+  						</a>
+  						<a class="carousel-control-next" href="#carouselStrategie" role="button" data-slide="next">
+   							<span class="carousel-control-next-icon" aria-hidden="true"></span>
+    						<span class="sr-only">Next</span>
+  						</a>
+					</div>
 				</div>
 			</div>	
 		</div>
 
-		<div v-on:click="show_ro = !show_ro">
-			<h2>Les Jeux de Rôles</h2>	<!-- Pokemon, Skyrim -->
-			<transition enter-active-class="animate__animated animate__fadeInRight" leave-active-class="animate__animated animate__fadeOutLeft" mode="out-in">
-				<div v-bind:key="show_ro">
-					{{
-						show_ro ?
-						"Phrase d'introduction 2"
-						:
-						"Phrase de présentation 2"
-					}}
+		<div class="bg_general align-items-center">
+			<div class="row">
+				<h2>Les Jeux de Rôles</h2>	<!-- Pokemon, Skyrim, Fire Emblem, Etrian Odyssey -->
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div id="carouselRpg" class="carousel slide" data-ride="carousel">
+  						<ol class="carousel-indicators">
+  							<li data-target="#carouselRpg" data-slide-to="0" class="active"></li>
+    						<li data-target="#carouselRpg" data-slide-to="1"></li>
+    						<li data-target="#carouselRpg" data-slide-to="2"></li>
+    						<li data-target="#carouselRpg" data-slide-to="3"></li>
+  						</ol>
+  						<div class="carousel-inner">
+    						<div class="carousel-item active">
+      							<img class="d-block w-100" src="img/jv/pokemon.jpg" alt="Pokemon Sword & Shield">
+      							<div class="carousel-caption d-none d-md-block">
+    								<h5>Pokemon Sword & Shield</h5>
+  								</div>
+    						</div>
+    						<div class="carousel-item">
+      							<img class="d-block w-100" src="img/jv/skyrim.jpg" alt="The Elder Scroll 5: Skyrim">
+      							<div class="carousel-caption d-none d-md-block">
+    								<h5>The Elder Scroll 5: Skyrim</h5>
+  								</div>
+    						</div>
+    						<div class="carousel-item">
+      							<img class="d-block w-100" src="img/jv/fireemblem.jpg" alt="Fire Emblem: Three House">
+      							<div class="carousel-caption d-none d-md-block">
+    								<h5>Fire Emblem: Three House</h5>
+  								</div>
+   							</div>
+   							<div class="carousel-item">
+      							<img class="d-block w-100" src="img/jv/etrianodyssey.jpg" alt="Etrian Odyssey 5">
+      							<div class="carousel-caption d-none d-md-block">
+    								<h5>Etrian Odyssey 5</h5>
+  								</div>
+   							</div>
+  						</div>
+  						<a class="carousel-control-prev" href="#carouselRpg" role="button" data-slide="prev">
+    						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    						<span class="sr-only">Previous</span>
+  						</a>
+  						<a class="carousel-control-next" href="#carouselRpg" role="button" data-slide="next">
+   							<span class="carousel-control-next-icon" aria-hidden="true"></span>
+    						<span class="sr-only">Next</span>
+  						</a>
+					</div>
 				</div>
-			</transition>	
+				<div v-on:click="show_ro = !show_ro" class="col-md-6">
+					<transition enter-active-class="animate__animated animate__fadeInLeft" leave-active-class="animate__animated animate__fadeOutRight" mode="out-in">
+						<div v-bind:key="show_ro">
+							{{
+								show_ro ?
+								"Phrase d'introduction 2"
+								:
+								"Phrase de présentation 2"
+							}}
+						</div>
+					</transition>	
+				</div>
+			</div>
 		</div>
 
-		<div v-on:click="show_ac = !show_ac">
-			<h2>Les Jeux d'Action</h2> <!-- Monster Hunter -->
-			<transition enter-active-class="animate__animated animate__fadeInLeft" leave-active-class="animate__animated animate__fadeOutRight" mode="out-in">
-				<div v-bind:key="show_ac">
-					{{
-						show_ac ?
-						"Phrase d'introduction 3"
-						:
-						"Phrase de présentation 3"
-					}}
+		<div class="bg_general align-items-center">
+			<div class="row">
+				<h2>Les Jeux d'Action</h2> <!-- Monster Hunter, Jedi: Fallen Order -->
+			</div>
+			<div class="row">
+				<div v-on:click="show_ac = !show_ac" class="col-md-6">
+					<transition enter-active-class="animate__animated animate__fadeInRight" leave-active-class="animate__animated animate__fadeOutLeft" mode="out-in">
+						<div v-bind:key="show_ac">
+							{{
+							show_ac ?
+							"Phrase d'introduction 3"
+							:
+							"Phrase de présentation 3"
+						}}
+						</div>
+					</transition>
 				</div>
-			</transition>
+				<div class="col-md-6">
+					<!-- Carousel -->
+					<div id="carouselAct" class="carousel slide" data-ride="carousel">
+  						<ol class="carousel-indicators">
+  							<li data-target="#carouselAct" data-slide-to="0" class="active"></li>
+    						<li data-target="#carouselAct" data-slide-to="1"></li>
+  						</ol>
+  						<div class="carousel-inner">
+    						<div class="carousel-item active">
+      							<img class="d-block w-100" src="img/jv/monsterhunter.jpg" alt="Monster Hunter World: Iceborne">
+      							<div class="carousel-caption d-none d-md-block">
+    								<h5>Monster Hunter World: Iceborne</h5>
+  								</div>
+    						</div>
+    						<div class="carousel-item">
+      							<img class="d-block w-100" src="img/jv/jedifallenorder.jpg" alt="Star Wars Jedi: Fallen Order">
+      							<div class="carousel-caption d-none d-md-block">
+    								<h5>Star Wars Jedi: Fallen Order</h5>
+  								</div>
+    						</div>
+  						</div>
+  						<a class="carousel-control-prev" href="#carouselAct" role="button" data-slide="prev">
+    						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    						<span class="sr-only">Previous</span>
+  						</a>
+  						<a class="carousel-control-next" href="#carouselAct" role="button" data-slide="next">
+   							<span class="carousel-control-next-icon" aria-hidden="true"></span>
+    						<span class="sr-only">Next</span>
+  						</a>
+					</div>
+				</div>
+			</div>
 		</div>
-
 	</div>
 
 	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
 	<script src="js/js_jv.js" type="text/javascript"></script>
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 </html>
