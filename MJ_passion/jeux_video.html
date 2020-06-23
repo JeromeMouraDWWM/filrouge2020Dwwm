@@ -10,30 +10,57 @@
 	<link rel="stylesheet" type="text/css" href="css/css_jv.css">
 </head>
 <body>
+
+	<nav class="navbar navbar-expand-lg navbar-dark">
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Navigation">
+    		<span class="navbar-toggler-icon"></span>
+  		</button>
+  		<div class="collapse navbar-collapse" id="navbarNav">
+    		<ul class="navbar-nav">
+     			<li class="nav-item">
+       				<a class="nav-link" href="../maquetteFinaleResp.html">Accueil</a>
+  				</li>
+   				<li class="nav-item">
+    				<a class="nav-link yellow" href="jeux_video.html">Jeux Vidéo</a>
+     			</li>
+      			<li class="nav-item">
+       				<a class="nav-link" href="manga_light_novel.html">Manga/Light Novel</a>
+     			</li>
+      			<li class="nav-item">
+       				<a class="nav-link" href="animaux.html">Animaux</a>
+   				</li>
+   			</ul>
+ 		</div>
+	</nav>
+
 	<div id="body" class="container-fluid">
 	
-		<div id="Introduction" class="bg_general row align-items-center">
+		<div id="Introduction" class="bg_general row align-items-center pad">
 			<span>
-				<h1>Ma Passion pour les jeux vidéo</h1>
+				<h1 class="yellow">Ma Passion pour les jeux vidéo</h1>
 				<p class="intro">Ce jeune mode de divertissement, né dans les années 50, est depuis les années 80 un secteur en pleine croissance qui a su se diversifier pour toucher un maximum de personne possible. Il en existe aujourd'hui de très nombreux genre et je vous présenterai dans cette page mes préférés.</p>
 			</span>
 		</div>
 
-		<div class="bg_general">
+		<div class="pad">
 			<div class="row">
-				<h2>Les Jeux de Stratégies</h2> <!-- Europa Universalis IV / X-COM / Civilization / Stellaris -->
+				<h2 class="yellow">Les Jeux de Stratégies</h2> <!-- Europa Universalis IV / X-COM / Civilization / Stellaris -->
 			</div>
 			<div class="row">
 				<div class="col-md-6 align-self-center" v-on:click="show_st = !show_st">
 					<transition enter-active-class="animate__animated animate__fadeInRight" leave-active-class="animate__animated animate__fadeOutLeft" mode="out-in">
-						<div v-bind:key="show_st">
-							<!-- Présentation du genre, puis de jeux -->
-						{{
-							show_st ?
-							"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-							:
-							"Phrase de présentation"
-						}}
+						<div class="text" v-bind:key="show_st">
+							<!-- Présentation du genre, puis de jeux  -->
+							<p v-if="show_st">
+							Le jeu de stratégie est un genre de jeu vidéo où l'accent est mis sur les capacités de réflexion et d'organisation du joueur pour atteindre ses objectifs. La grande différence entre le jeu de stratégie et d'autre type de jeu pouvant nécessité de la reflexion est l'échelle à laquelle celle-ci doit se faire, qui est plus grosse dans ce genre, et le fait qu'elle implique des opposants contrairement au jeu de réflexion. <br>
+							<em>Cliquez pour lire la suite</em>
+							</p>
+							<p v-else>
+							<em>Europa Universalis :</em> Un jeu de grande stratégie où vous incarnez un pays de votre choix à travers la période historique de la rennaissance. <br>
+							<em>Xcom :</em> Un jeu de stratégie au tour par tour où vous commendez une unité internationale spéciale dont la mission est de repousser l'envahisseur extra-terrestre. <br>
+							<em>Civilization :</em> Un 4X au tour par tour où vous incarnez une civilisation humaine de votre choix et devrez survivre à travers les différentes époques. <br>
+							<em>Stellaris :</em> Un 4X en temps réel où vous incarnez une civilisation interstellaire personnalisable et essayez de former votre empire galactique.
+							</p>
 						</div>
 					</transition>
 				</div>
@@ -85,12 +112,28 @@
 			</div>	
 		</div>
 
-		<div class="bg_general align-items-center">
+		<div class="pad">
 			<div class="row">
-				<h2>Les Jeux de Rôles</h2>	<!-- Pokemon, Skyrim, Fire Emblem, Etrian Odyssey -->
+				<h2 class="yellow">Les Jeux de Rôles</h2>	<!-- Pokemon, Skyrim, Fire Emblem, Etrian Odyssey -->
 			</div>
 			<div class="row">
-				<div class="col-md-6">
+				<div v-on:click="show_ro = !show_ro" class="col-md-6 align-self-center">
+					<transition enter-active-class="animate__animated animate__fadeInRight" leave-active-class="animate__animated animate__fadeOutLeft" mode="out-in">
+						<div class="text" v-bind:key="show_ro">
+							<p v-if="show_ro">
+								Le jeu de rôle est un genre de jeu vidéo concentré sur ses personnages et son immersion dans un nouvel univers. Cependant, selon la culture de l'équipe de developpement (occidentale ou extrême-orientale), l'intréprétation de "rôle" variera. <br>
+								<em>Cliquez pour lire la suite</em>
+							</p>
+							<p v-else>
+								<em>Pokemon :</em> Un jeu de rôle classique à la japonaise où vous attrapez et éduquez des créatures nommées Pokémon que vous faites combattre en duel. <br>
+								<em>Skyrim :</em> Un jeu de rôle à la sauce occidentale où vous incarnez un personnage de votre choix qui a une destinée bien mouvementée dans un monde qui l'est tout autant. <br>
+								<em>Fire Emblem :</em> Un jeu de rôle tactique qui prends des élements du jeu de statégie au tour par tour pour son gameplay, mais créer un univers et des personnages importants comme on peut si attendre d'un jeu de rôle. <br>
+								<em>Etrian Odyssey :</em> Un jeu de rôle de type donjon où vous devrez créer un groupe d'aventurier pour explorer un labyrinthe rempli de danger.
+							</p>
+						</div>
+					</transition>	
+				</div>
+				<div class="col-md-6 align-self-center">
 					<div id="carouselRpg" class="carousel slide" data-ride="carousel">
   						<ol class="carousel-indicators">
   							<li data-target="#carouselRpg" data-slide-to="0" class="active"></li>
@@ -134,39 +177,29 @@
   						</a>
 					</div>
 				</div>
-				<div v-on:click="show_ro = !show_ro" class="col-md-6">
-					<transition enter-active-class="animate__animated animate__fadeInLeft" leave-active-class="animate__animated animate__fadeOutRight" mode="out-in">
-						<div v-bind:key="show_ro">
-							{{
-								show_ro ?
-								"Phrase d'introduction 2"
-								:
-								"Phrase de présentation 2"
-							}}
-						</div>
-					</transition>	
-				</div>
 			</div>
 		</div>
 
-		<div class="bg_general align-items-center">
+		<div class="pad">
 			<div class="row">
-				<h2>Les Jeux d'Action</h2> <!-- Monster Hunter, Jedi: Fallen Order -->
+				<h2 class="yellow">Les Jeux d'Action</h2> <!-- Monster Hunter, Jedi: Fallen Order -->
 			</div>
 			<div class="row">
-				<div v-on:click="show_ac = !show_ac" class="col-md-6">
+				<div v-on:click="show_ac = !show_ac" class="col-md-6 align-self-center">
 					<transition enter-active-class="animate__animated animate__fadeInRight" leave-active-class="animate__animated animate__fadeOutLeft" mode="out-in">
-						<div v-bind:key="show_ac">
-							{{
-							show_ac ?
-							"Phrase d'introduction 3"
-							:
-							"Phrase de présentation 3"
-						}}
+						<div class="text" v-bind:key="show_ac">
+							<p v-if="show_ac">
+							Le jeu d'action est un genre de jeu vidéo qui met en avant les reflexes et la réactivité du joueur. Ce genre de jeu consiste généralement à devoir accomplir des missions néccéssitant l'affrontement avec de nombreux ennemis qui s'améliorent après chaque niveau. <br>
+							<em>Cliquez pour lire la suite</em>
+							</p>
+							<p v-else>
+							<em>Monster Hunter :</em> Un jeu d'action et de rôle où vous incarnez un chasseur qui doit tuer différents monstres tous imposants, et vous pouvez ensuite utiliser le butin pour améliorer votre équipement et chasser des monstres plus dangereux. <br>
+							<em>Jedi: Fallen Order :</em> Un jeu d'action et d'aventure où vous incarnez un jedi ayant survécu à l'ordre 66, et il se retrouve à contrecoeur à devoir explorer la galaxie pour essayer de restaurer l'ordre jedi.
+							</p>	
 						</div>
 					</transition>
 				</div>
-				<div class="col-md-6">
+				<div class="col-md-6 align-self-center">
 					<!-- Carousel -->
 					<div id="carouselAct" class="carousel slide" data-ride="carousel">
   						<ol class="carousel-indicators">
