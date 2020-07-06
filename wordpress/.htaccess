@@ -1,0 +1,23 @@
+
+# BEGIN WordPress
+# The directives (lines) between `BEGIN WordPress` and `END WordPress` are
+# dynamically generated, and should only be modified via WordPress filters.
+# Any changes to the directives between these markers will be overwritten.
+
+# END WordPress
+
+## WP Defender - Prevent information disclosure ##
+
+<FilesMatch "\.(md|exe|sh|bak|inc|pot|po|mo|log|sql)$">
+Require all denied
+</FilesMatch>
+
+<Files robots.txt>
+Require all granted
+</Files>
+
+<Files ads.txt>
+Require all granted
+</Files>
+
+## WP Defender - End ##
