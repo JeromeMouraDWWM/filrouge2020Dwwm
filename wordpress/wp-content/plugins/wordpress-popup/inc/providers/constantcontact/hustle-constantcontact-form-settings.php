@@ -68,16 +68,33 @@ if ( ! class_exists( 'Hustle_ConstantContact_Form_Settings' ) ) :
 			$current_data              = array(
 				'list_id' => '',
 			);
-			$current_data              = $this->get_current_data( $current_data, $submitted_data );
-			$is_submit                 = ! empty( $submitted_data['hustle_is_submit'] );
+
+			$current_data  = $this->get_current_data( $current_data, $submitted_data );
+			$is_submit     = ! empty( $submitted_data['hustle_is_submit'] );
+			$is_ssl        = is_ssl();
+			$error_message = $is_ssl ? '' : __( 'Constant Contact requires your site to have SSL certificate.', 'hustle' );
 
 			if ( $is_submit && empty( $submitted_data['list_id'] ) ) {
 				$error_message = __( 'The email list is required.', 'hustle' );
-			} else {
-				$error_message = '';
 			}
 
 			$options = $this->get_first_step_options( $current_data );
+
+			if ( empty( $error_message ) ) {
+				$has_errors = false;
+
+			} else {
+				$has_errors = true;
+
+				$error_notice = array(
+					'type'  => 'notice',
+					'icon'  => 'info',
+					'class' => 'sui-notice-error',
+					'value' => esc_html( $error_message ),
+				);
+
+				array_unshift( $options, $error_notice );
+			}
 
 			$step_html = Hustle_Provider_Utils::get_integration_modal_title_markup(
 				__( 'Choose your list', 'hustle' ),
@@ -85,17 +102,6 @@ if ( ! class_exists( 'Hustle_ConstantContact_Form_Settings' ) ) :
 			);
 
 			$step_html .= Hustle_Provider_Utils::get_html_for_options( $options );
-
-			if ( ! is_ssl() ) {
-				$error_message .= __( 'Constant Contact requires your site to have SSL certificate.', 'hustle' );
-			}
-
-			if ( empty( $error_message ) ) {
-				$has_errors = false;
-			} else {
-				$step_html .= '<div class="sui-notice sui-notice-error" style="margin-bottom: 0;"><p>' . $error_message . '</p></div>';
-				$has_errors = true;
-			}
 
 			$disabled = ! is_ssl();
 

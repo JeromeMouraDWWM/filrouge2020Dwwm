@@ -256,7 +256,14 @@ abstract class Hustle_Model extends Hustle_Data {
 	 * @return array
 	 */
 	public function validate_module( $data ) {
-		// validation for sshare module
+		$errors = array();
+
+		// Name validation.
+		if ( empty( sanitize_text_field( $data['module']['module_name'] ) ) ) {
+			$errors['error']['name_error'] = __( 'This field is required', 'hustle' );
+		}
+
+		// Validation for sshare module.
 		if ( Hustle_Module_Model::SOCIAL_SHARING_MODULE === $this->module_type ) {
 
 			// validation
@@ -266,8 +273,6 @@ abstract class Hustle_Model extends Hustle_Data {
 				'desktop' => isset( $display['float_desktop_offset'] ) ? $display['float_desktop_offset'] : '',
 				'mobile'  => isset( $display['float_mobile_offset'] ) ? $display['float_mobile_offset'] : '',
 			);
-
-			$errors = array();
 
 			// Social platform url check.
 			if ( ! empty( $icons ) ) {

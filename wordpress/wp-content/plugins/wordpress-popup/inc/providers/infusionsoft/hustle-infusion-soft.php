@@ -279,18 +279,28 @@ if ( ! class_exists( 'Hustle_Infusion_Soft' ) ) :
 				),
 			);
 
+			if ( $has_errors ) {
+
+				$error_notice = array(
+					'type'  => 'notice',
+					'icon'  => 'info',
+					'class' => 'sui-notice-error',
+					'value' => esc_html( $error_message ),
+				);
+				array_unshift( $options, $error_notice );
+			}
+
 			$step_html = Hustle_Provider_Utils::get_integration_modal_title_markup(
 				__( 'Configure InfusionSoft', 'hustle' ),
 				sprintf(
+					/* translators: 1. opening 'a' tag to the API key guide, 2. closing 'a' tag, 3. opening 'a' tag to the account name guide */
 					__( 'Log in to your account to get your %1$sAPI key (encrypted)%2$s and %3$saccount name%2$s.', 'hustle' ),
 					'<a target="_blank" href="http://help.infusionsoft.com/userguides/get-started/tips-and-tricks/api-key">',
 					'</a>',
 					'<a target="_blank" href="http://help.mobit.com/infusionsoft-integration/how-to-find-your-infusionsoft-account-name" >'
 				)
 			);
-			if ( $has_errors ) {
-				$step_html .= '<span class="sui-notice sui-notice-error"><p>' . esc_html( $error_message ) . '</p></span>';
-			}
+
 			$step_html .= Hustle_Provider_Utils::get_html_for_options( $options );
 
 			$is_edit = $this->settings_are_completed( $global_multi_id );

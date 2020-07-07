@@ -547,13 +547,30 @@ $meridiem_options = array(
 
 							<label class="sui-label" style="margin-bottom: 5px;"><?php esc_html_e( 'Timezone', 'hustle' ); ?></label>
 
-							<div class="sui-notice sui-notice-info" style="margin-top: 5px;">
+							<?php
+							$timezone = str_replace( '_', ' ', get_option( 'timezone_string' ) );
 
-								<?php $timezone = str_replace( '_', ' ', get_option( 'timezone_string' ) ); ?>
-
-								<p><?php printf( esc_html__( "Your server's timezone is %1\$s(GMT %3\$s) %4\$s%2\$s and the current time on your server is %1\$s%5\$s%2\$s. ", 'hustle' ), '<strong>', '</strong>', esc_html( $wp_gmt_offset ), esc_html( $timezone ), '{{ serverCurrentTime }}' ); ?></p>
-
-							</div>
+							$notice_message = sprintf(
+								esc_html__( "Your server's timezone is %1\$s(GMT %3\$s) %4\$s%2\$s and the current time on your server is %1\$s%5\$s%2\$s. ", 'hustle' ),
+								'<strong>',
+								'</strong>',
+								esc_html( $wp_gmt_offset ),
+								esc_html( $timezone ),
+								'{{ serverCurrentTime }}'
+							);
+							$notice_options = array(
+								array(
+									'type'       => 'inline_notice',
+									'class'      => 'sui-notice-info',
+									'icon'       => 'info',
+									'value'      => $notice_message,
+									'attributes' => array(
+										'style' => 'margin-top: 5px;',
+									),
+								),
+							);
+							$this->get_html_for_options( $notice_options );
+							?>
 
 						</div>
 

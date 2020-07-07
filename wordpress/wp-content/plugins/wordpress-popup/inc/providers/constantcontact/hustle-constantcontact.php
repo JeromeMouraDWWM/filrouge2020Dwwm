@@ -213,7 +213,9 @@ if ( ! class_exists( 'Hustle_ConstantContact' ) ) :
 					array(
 						array(
 							'type'  => 'notice',
-							'value' => sprintf( __( 'You are connected to %s', 'hustle' ), '<strong>' . $account_email . '</strong>' ),
+							'icon'  => 'info',
+							/* translators: email associated to the account */
+							'value' => sprintf( esc_html__( 'You are connected to %s', 'hustle' ), '<strong>' . esc_html( $account_email ) . '</strong>' ),
 							'class' => 'sui-notice-success',
 						),
 					)

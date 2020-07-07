@@ -163,15 +163,33 @@ switch ( $type ) :
 		break;
 
 	case 'inline_notice':
+		// We're assuming that if there's no value, this is an inline alert notice, not a static one.
+		$is_alert = empty( $value );
 		?>
 
-		<div role="alert" class="sui-notice <?php echo isset( $class ) ? esc_attr( $class ) : ''; ?>" <?php $this->render_attributes( $attributes ); ?>>
+		<div
+			<?php echo ! $is_alert ? '' : 'role="alert" aria-live="assertive"'; ?>
+			<?php echo ! empty( $id ) ? 'id="' . esc_attr( $id ) . '"' : ''; ?>
+			class="sui-notice <?php echo isset( $class ) ? esc_attr( $class ) : ''; ?>"
+			<?php $this->render_attributes( $attributes ); ?>
+		>
 
-			<div class="sui-notice-content">
+			<?php if ( ! $is_alert ) : ?>
 
-				<p><?php echo $value; // Make sure $value is properly escaped! We're not escaping it in here. ?></p>
+				<div class="sui-notice-content">
 
-			</div>
+					<div class="sui-notice-message">
+
+						<?php if ( ! empty( $icon ) ) : ?>
+							<span class="sui-notice-icon sui-icon-<?php echo esc_attr( $icon ); ?> sui-md" aria-hidden="true"></span>
+						<?php endif; ?>
+						<p><?php echo $value; // Make sure $value is properly escaped! We're not escaping it in here. ?></p>
+
+					</div>
+
+				</div>
+
+			<?php endif; ?>
 
 		</div>
 

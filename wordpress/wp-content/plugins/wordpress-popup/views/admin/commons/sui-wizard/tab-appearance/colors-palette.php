@@ -111,16 +111,18 @@ $palettes_settings_url = add_query_arg(
 							$this->render(
 								'admin/commons/sui-wizard/elements/palette-optin',
 								array(
-									'module_type' => $module_type,
-									'settings'    => $settings,
+									'module_type'     => $module_type,
+									'settings'        => $settings,
+									'is_settings_tab' => false,
 								)
 							);
 						} else {
 							$this->render(
 								'admin/commons/sui-wizard/elements/palette-informational',
 								array(
-									'module_type' => $module_type,
-									'settings'    => $settings,
+									'module_type'     => $module_type,
+									'settings'        => $settings,
+									'is_settings_tab' => false,
 								)
 							);
 						}

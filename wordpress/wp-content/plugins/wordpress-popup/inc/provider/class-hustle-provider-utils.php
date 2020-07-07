@@ -561,7 +561,7 @@ class Hustle_Provider_Utils {
 					$action_class = 'hustle-provider-back ';
 					break;
 				case 'close':
-					$action_class = 'hustle-provider-close ';
+					$action_class = 'hustle-provider-close hustle-modal-close ';
 					break;
 				case 'connect':
 					$action_class = 'hustle-provider-connect ';

@@ -134,6 +134,10 @@ if ( ! class_exists( 'Hustle_Icontact_Form_Settings' ) ) :
 			$password = $provider->get_setting( 'password', '', $global_multi_id );
 			$api      = $provider::api( $app_id, $password, $username );
 
+			if ( empty( $api ) ) {
+				return array();
+			}
+
 			$lists  = array();
 			$limit  = 20;
 			$offset = 0;

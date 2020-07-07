@@ -625,6 +625,14 @@ class Hustle_Settings_Admin_Ajax {
 			}
 		}
 
+		// TODO: delete transient on uninstall.
+		// TODO: get these dynamically.
+		// Delete the transients set for retrieving this data in the WP Dashboard.
+		// These are the same values available in Hustle_Wp_Dashboard_Page::get_analytic_ranges().
+		delete_transient( 'hustle_wp_widget_daily_stats_7' );
+		delete_transient( 'hustle_wp_widget_daily_stats_30' );
+		delete_transient( 'hustle_wp_widget_daily_stats_90' );
+
 		Hustle_Settings_Admin::update_hustle_settings( $value, 'analytics' );
 
 		if ( ! $reload ) {

@@ -21,7 +21,10 @@
 
 		<?php
 		// SETTING: Opt-in Form Fields.
-		$this->render( 'admin/commons/sui-wizard/tab-emails/form-fields' );
+		$this->render(
+			'admin/commons/sui-wizard/tab-emails/form-fields',
+			array( 'elements' => $settings['form_elements'] )
+		);
 
 		// SETTING: Submission Behavior.
 		$this->render(

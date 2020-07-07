@@ -50,6 +50,7 @@
 					array(
 						array(
 							'type'  => 'inline_notice',
+							'icon'  => 'info',
 							/* translators: 1: opening 'strong' tag, 2: closing 'strong' tag. */
 							'value' => sprintf( esc_html__( 'Hustle debug mode requires WordPress debugging to be enabled. So, make sure you have the %1$sWP_DEBUG%2$s, and %1$sWP_DEBUG_LOG%2$s defines set to %1$strue%2$s in your wp-config file.', 'hustle' ), '<strong>', '</strong>' ),
 						),

@@ -64,13 +64,14 @@ ob_start();
 </div>
 
 <?php // FIELD: Date Range. ?>
-<div class="sui-form-field" style="margin-bottom: 0;">
+<div class="sui-form-field has-calendar-inline" style="margin-bottom: 0;">
 
 	<label for="hustle-dialog-filter--date" id="hustle-dialog-filter--date-label" class="sui-label"><?php esc_html_e( 'Submission date range', 'hustle' ); ?></label>
 
 	<div class="sui-date">
 
 		<span class="sui-icon-calendar" aria-hidden="true"></span>
+
 		<input
 			type="text"
 			name="date_range"
@@ -79,6 +80,7 @@ ob_start();
 			placeholder="<?php esc_html_e( 'Pick a date range', 'hustle' ); ?>"
 			class="hustle-entries-filter-date sui-form-control"
 			aria-labelledby="hustle-dialog-filter--date-label"
+			autocomplete="off"
 		/>
 
 	</div>

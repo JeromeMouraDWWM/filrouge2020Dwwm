@@ -6,6 +6,8 @@
  * @since 4.0.0
  */
 
+$is_tracking_disabled = empty( $module->get_tracking_types() );
+
 $module_tag_class = $module->active ? ' sui-tag-blue' : '';
 $tooltip_message  = '';
 $schedule_icon    = '';
@@ -95,22 +97,8 @@ if ( Hustle_Module_Model::SOCIAL_SHARING_MODULE !== $module->module_type ) {
 
 			<span class="sui-trim-text"><?php echo esc_html( $module->module_name ); ?></span>
 
-			<!--
-				NOTE: Use "hui-tag-scheduled" class on "sui-tag" element when a module has been scheduled.
-				In addition to that, have in mind the following changes too:
-
-				1. When using "hui-tag-scheduled" you must also include icon markup as follows:
-					<span class="sui-icon-clock sui-sm" aria-hidden="true"></span>
-
-				2. When module schedule is currently active, include "hui-scheduled-success" class
-					on "sui-tag" to paint icon green.
-
-				3. When module schedule is over, include "hui-scheduled-error" class on "sui-tag"
-					to paint icon red.
-			-->
 			<span
 				class="sui-tag<?php echo esc_attr( $module_tag_class ); ?>"
-				data-status="<?php echo $module->active ? 'published' : 'draft'; ?>"
 				<?php echo ! empty( $tooltip_message ) ? 'data-tooltip="' . esc_html( $tooltip_message ) . '"' : ''; ?>
 			>
 
@@ -125,15 +113,9 @@ if ( Hustle_Module_Model::SOCIAL_SHARING_MODULE !== $module->module_type ) {
 
 			</span>
 
-			<!---
-				NOTE: Show this tag ONLY when analytics is disabled.
-			--->
-			<?php
-			$analytics = Hustle_Settings_Admin::get_dashboard_analytics_settings();
-			if ( '1' === $analytics['enabled'] && ! in_array( $module->module_type, $analytics['modules'], true ) ) :
-				?>
-				<span class="sui-tag sui-tag-disabled"><?php esc_html_e( 'Analytics Disabled', 'hustle' ); ?></span>
-			<?php endif; ?>
+			<span class="sui-tag sui-tag-disabled hustle-analytics-disabled-tag<?php echo ( $module->active && $is_tracking_disabled ) ? '' : ' sui-hidden'; ?>">
+				<?php esc_html_e( 'Tracking Disabled', 'hustle' ); ?>
+			</span>
 
 		</div>
 
@@ -168,11 +150,12 @@ if ( Hustle_Module_Model::SOCIAL_SHARING_MODULE !== $module->module_type ) {
 				$this->render(
 					'admin/commons/sui-listing/elements/actions',
 					array(
-						'module'              => $module,
-						'smallcaps_singular'  => $smallcaps_singular,
-						'capitalize_singular' => $capitalize_singular,
-						'capability'          => $capability,
-						'can_create'          => $can_create,
+						'module'               => $module,
+						'smallcaps_singular'   => $smallcaps_singular,
+						'capitalize_singular'  => $capitalize_singular,
+						'capability'           => $capability,
+						'can_create'           => $can_create,
+						'is_tracking_disabled' => $is_tracking_disabled,
 					)
 				);
 				?>

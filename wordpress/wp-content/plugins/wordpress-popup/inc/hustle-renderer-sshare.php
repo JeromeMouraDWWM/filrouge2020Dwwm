@@ -21,18 +21,17 @@ class Hustle_Renderer_Sshare extends Hustle_Renderer_Abstract {
 	 */
 	protected function get_wrapper_main( $subtype, $custom_classes ) {
 
-		$module = $this->module;
-		$module_id = $module->module_id;
-		$display = $module->display;
+		$module_id = $this->module->module_id;
+		$display   = $this->module->display;
 
-		// Tracking enabled data
-		$tracking_enabled_data = $module->is_tracking_enabled( $subtype ) ? 'enabled' : 'disabled';
+		// Tracking enabled data.
+		$tracking_enabled_data = $this->module->is_tracking_enabled( $subtype ) ? 'enabled' : 'disabled';
 
 		// Type of module
 		// Applies for all except "float" modules.
 		$module_type = 'inline';
 
-		// Main data attributes for module
+		// Main data attributes for module.
 		$module_data = sprintf(
 			'
 			data-id="%s"
@@ -128,7 +127,7 @@ class Hustle_Renderer_Sshare extends Hustle_Renderer_Abstract {
 		$html = sprintf(
 			'<div class="hustle-ui hustle-%s hustle_module_id_%d %s" %s %s>',
 			$module_type,
-			$module->module_id,
+			$this->module->module_id,
 			esc_attr( $custom_classes ),
 			$module_data,
 			$inline_style
@@ -175,12 +174,12 @@ class Hustle_Renderer_Sshare extends Hustle_Renderer_Abstract {
 
 		$html = '';
 
-		$module = $this->module;
-		$module_id = $module->module_id;
+		$module_id = $this->module->module_id;
+
 		// Prevent php error messages on wizard preview when no services are active.
-		$content = $module->content; //$module->__get( 'content' );
-		$display = $module->display;
-		$design = $module->design;
+		$content = $this->module->content;
+		$display = $this->module->display;
+		$design  = $this->module->design;
 
 		$icons_design = $design->icon_style;
 		$icons_custom_color = 'false';
@@ -202,7 +201,7 @@ class Hustle_Renderer_Sshare extends Hustle_Renderer_Abstract {
 			$icons_custom_color = ( '1' === $design->floating_customize_colors ) ? 'true' : 'false';
 
 			// Check if the module has floating active for desktop.
-			if ( $module->is_display_type_active( Hustle_SShare_Model::FLOAT_DESKTOP ) ) {
+			if ( $this->module->is_display_type_active( Hustle_SShare_Model::FLOAT_DESKTOP ) ) {
 
 				$position_x = $display->float_desktop_position;
 				$position_y = $display->float_desktop_position_y;
@@ -222,7 +221,7 @@ class Hustle_Renderer_Sshare extends Hustle_Renderer_Abstract {
 			}
 
 			// Check if the module has floating active for mobile.
-			if ( $module->is_display_type_active( Hustle_SShare_Model::FLOAT_MOBILE ) ) {
+			if ( $this->module->is_display_type_active( Hustle_SShare_Model::FLOAT_MOBILE ) ) {
 
 				$position_x = $display->float_mobile_position;
 				$position_y = $display->float_mobile_position_y;
@@ -309,7 +308,7 @@ class Hustle_Renderer_Sshare extends Hustle_Renderer_Abstract {
 				 *     @type int    'counter'  The default number for the counter. This will be static, it won't increase for now.
 				 * }
 				 */
-				$social_icons = apply_filters( 'hustle_social_sharing_get_selected_networks', $social_icons, $module );
+				$social_icons = apply_filters( 'hustle_social_sharing_get_selected_networks', $social_icons, $this->module );
 
 				// phpcs:disable Generic.WhiteSpace.ScopeIndent.IncorrectExact
 				// Extra indentation to mimic html tree.
@@ -346,7 +345,10 @@ class Hustle_Renderer_Sshare extends Hustle_Renderer_Abstract {
 						}
 
 						if ( 'fivehundredpx' === $icon ) {
-							$icon = '500px';
+							$icon    = '500px';
+							$network = 'fivehundredpx';
+						} else {
+							$network = $icon;
 						}
 
 						$html .= '<li>';
@@ -355,7 +357,7 @@ class Hustle_Renderer_Sshare extends Hustle_Renderer_Abstract {
 								'<a %1$s class="hustle-share-icon hustle-share--%2$s" data-network="%3$s" data-counter="%4$s" data-link="%5$s" data-count="%6$s">',
 								$href_value,
 								esc_attr( $icon ),
-								esc_attr( $icon ),
+								esc_attr( $network ),
 								'0' === $content->counter_enabled ? 'none' : esc_attr( $type ),
 								$link_type,
 								esc_attr( $data['counter'] )

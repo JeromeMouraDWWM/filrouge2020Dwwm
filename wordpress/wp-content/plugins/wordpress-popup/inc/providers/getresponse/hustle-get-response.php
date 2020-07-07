@@ -238,17 +238,27 @@ if ( ! class_exists( 'Hustle_Get_Response' ) ) :
 				),
 			);
 
+			if ( $has_errors ) {
+
+				$error_notice = array(
+					'type'  => 'notice',
+					'icon'  => 'info',
+					'class' => 'sui-notice-error',
+					'value' => esc_html( $error_message ),
+				);
+				array_unshift( $options, $error_notice );
+			}
+
 			$step_html = Hustle_Provider_Utils::get_integration_modal_title_markup(
 				__( 'Configure GetResponse', 'hustle' ),
 				sprintf(
+					/* translators: 1. opening 'a' tag to the GetResponse API page, 2. closing 'a' tag */
 					__( 'Log in to your %1$sGetResponse account%2$s to get your API Key v3.', 'hustle' ),
 					'<a href="https://app.getresponse.com/manage_api.html" target="_blank">',
 					'</a>'
 				)
 			);
-			if ( $has_errors ) {
-				$step_html .= '<span class="sui-notice sui-notice-error"><p>' . esc_html( $error_message ) . '</p></span>';
-			}
+
 			$step_html .= Hustle_Provider_Utils::get_html_for_options( $options );
 
 			$is_edit = $this->settings_are_completed( $global_multi_id );

@@ -588,7 +588,7 @@ abstract class Hustle_Module_Page_Abstract extends Hustle_Admin_Page_Abstract {
 				);
 			}
 
-			$messages = array(
+			$messages                  = array(
 				'module_imported'       => __( 'Module successfully imported.', 'hustle' ),
 				'module_duplicated'     => __( 'Module successfully duplicated.', 'hustle' ),
 				'module_tracking_reset' => __( "Module's tracking data successfully reset.", 'hustle' ),
@@ -740,7 +740,8 @@ abstract class Hustle_Module_Page_Abstract extends Hustle_Admin_Page_Abstract {
 		$vars['templates'] = Opt_In_Utils::hustle_get_page_templates();
 
 		// Module error message.
-		$vars['messages']['sshare_module_error'] = __( "Couldn't save your module settings because there were some errors on {page} tab(s). Please fix those errors and try again.", 'hustle' );
+		$vars['messages']['module_error']        = __( "Couldn't save your module settings because there were some errors on {page} tab(s). Please fix those errors and try again.", 'hustle' );
+		$vars['messages']['module_error_reload'] = __( 'Something went wrong. Please reload this page and try saving again', 'hustle' );
 
 		// Visibility conditions titles, labels and bodies.
 		$vars['messages']['conditions'] = array(
@@ -768,27 +769,31 @@ abstract class Hustle_Module_Page_Abstract extends Hustle_Admin_Page_Abstract {
 			'wc_tags'                     => __( 'WooCommerce Tags', 'hustle' ),
 			'wc_archive_pages'            => __( 'WooCommerce Archives', 'hustle' ),
 			'wc_static_pages'             => __( 'WooCommerce Static Pages', 'hustle' ),
+			'cookie_set'                  => __( 'Browser Cookie', 'hustle' ),
 		);
 
 		$vars['messages']['condition_labels'] = array(
-			'mobile_only'       => __( 'Mobile only', 'hustle' ),
-			'desktop_only'      => __( 'Desktop only', 'hustle' ),
-			'any_conditions'    => __( '{number} condition(s)', 'hustle' ),
-			'number_views'      => '< {number}',
-			'number_views_more' => '> {number}',
-			'any'               => __( 'Any', 'hustle' ),
-			'all'               => __( 'All', 'hustle' ),
-			'no'                => __( 'No', 'hustle' ),
-			'none'              => __( 'None', 'hustle' ),
-			'true'              => __( 'True', 'hustle' ),
-			'false'             => __( 'False', 'hustle' ),
-			'logged_in'         => __( 'Logged in', 'hustle' ),
-			'logged_out'        => __( 'Logged out', 'hustle' ),
-			'only_these'        => __( 'Only {number}', 'hustle' ),
-			'except_these'      => __( 'All except {number}', 'hustle' ),
-			'reg_date'          => __( 'Day {number} ', 'hustle' ),
-			'immediately'       => __( 'Immediately', 'hustle' ),
-			'forever'           => __( 'Forever', 'hustle' ),
+			'mobile_only'         => __( 'Mobile only', 'hustle' ),
+			'desktop_only'        => __( 'Desktop only', 'hustle' ),
+			'any_conditions'      => __( '{number} condition(s)', 'hustle' ),
+			'number_views'        => '< {number}',
+			'number_views_more'   => '> {number}',
+			'any'                 => __( 'Any', 'hustle' ),
+			'all'                 => __( 'All', 'hustle' ),
+			'no'                  => __( 'No', 'hustle' ),
+			'none'                => __( 'None', 'hustle' ),
+			'true'                => __( 'True', 'hustle' ),
+			'false'               => __( 'False', 'hustle' ),
+			'logged_in'           => __( 'Logged in', 'hustle' ),
+			'logged_out'          => __( 'Logged out', 'hustle' ),
+			'only_these'          => __( 'Only {number}', 'hustle' ),
+			'except_these'        => __( 'All except {number}', 'hustle' ),
+			'reg_date'            => __( 'Day {number} ', 'hustle' ),
+			'immediately'         => __( 'Immediately', 'hustle' ),
+			'forever'             => __( 'Forever', 'hustle' ),
+			'cookie_anything'     => __( '{name} is anything', 'hustle' ),
+			'cookie_doesnt_exist' => __( '{name} does not exist', 'hustle' ),
+			'cookie_value'        => __( '{name} {value_condition} {value}', 'hustle' ),
 		);
 
 		$vars['wp_conditions'] = array(
@@ -818,6 +823,20 @@ abstract class Hustle_Module_Page_Abstract extends Hustle_Admin_Page_Abstract {
 			'is_product_tag'      => __( 'Product Tag', 'hustle' ),
 		);
 
+		$vars['wp_cookie_set'] = array(
+			'anything'             => __( 'is anything', 'hustle' ),
+			'equals'               => __( 'equals', 'hustle' ),
+			'contains'             => __( 'contains', 'hustle' ),
+			'matches_pattern'      => __( 'matches a pattern', 'hustle' ),
+			'doesnt_equals'        => __( 'does not equals', 'hustle' ),
+			'doesnt_contain'       => __( 'does not contain', 'hustle' ),
+			'doesnt_match_pattern' => __( 'does not match a pattern', 'hustle' ),
+			'less_than'            => __( 'is less than', 'hustle' ),
+			'less_equal_than'      => __( 'is less or equal to', 'hustle' ),
+			'greater_than'         => __( 'is greater than', 'hustle' ),
+			'greater_equal_than'   => __( 'is greater or equal to', 'hustle' ),
+		);
+
 		$vars['roles']     = Opt_In_Utils::get_user_roles();
 		$vars['browsers']  = Opt_In_Utils::get_browsers();
 		$vars['countries'] = Opt_In_Utils::get_countries();
@@ -837,9 +856,18 @@ abstract class Hustle_Module_Page_Abstract extends Hustle_Admin_Page_Abstract {
 	 */
 	protected function register_fields_js_vars( $vars ) {
 
+		$renderer              = $this->get_renderer();
+		$no_fields_notice_args = array(
+			array(
+				'type'  => 'inline_notice',
+				'icon'  => 'info',
+				'value' => esc_html__( 'You don\'t have any {field_type} field in your opt-in form.', 'hustle' ),
+			),
+		);
+
 		$vars['messages']['form_fields'] = array(
 			'errors'                      => array(
-				'no_fileds_info'             => '<div class="sui-notice"><p>' . __( 'You don\'t have any {field_type} field in your opt-in form.', 'hustle' ) . '</p></div>',
+				'no_fileds_info'             => $renderer->get_html_for_options( $no_fields_notice_args, true ),
 				'custom_field_not_supported' => __( 'Custom fields are not supported by the active provider', 'hustle' ),
 			),
 			'label'                       => array(
@@ -949,9 +977,9 @@ abstract class Hustle_Module_Page_Abstract extends Hustle_Admin_Page_Abstract {
 		<main class="<?php echo esc_attr( $main_class ); ?>">
 
 			<?php
-			$template_args  = $this->get_page_edit_template_args();
-			$this->renderer = new Hustle_Layout_Helper( $this );
-			$this->renderer->render( $this->page_edit_template_path, $template_args );
+			$template_args = $this->get_page_edit_template_args();
+			$renderer      = $this->get_renderer();
+			$renderer->render( $this->page_edit_template_path, $template_args );
 			?>
 
 		</main>
@@ -1060,7 +1088,6 @@ abstract class Hustle_Module_Page_Abstract extends Hustle_Admin_Page_Abstract {
 
 		ob_start();
 
-		// Temporary. Moving this somewhere else instead.
 		$renderer = new Hustle_Layout_Helper();
 
 		// ELEMENT: Tracking data.

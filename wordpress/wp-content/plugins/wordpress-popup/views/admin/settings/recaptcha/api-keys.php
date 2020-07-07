@@ -132,6 +132,7 @@ $types = array(
 								array(
 									'type'       => 'inline_notice',
 									'class'      => 'hustle-recaptcha-' . esc_attr( $key ) . '-preview-notice',
+									'icon'       => 'info',
 									'value'      => esc_html__( 'Save your API keys to load the reCAPTCHA preview.', 'hustle' ),
 									'attributes' => array(
 										'style' => 'margin-top: 0;',

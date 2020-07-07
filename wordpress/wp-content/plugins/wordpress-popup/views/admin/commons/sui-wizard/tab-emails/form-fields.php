@@ -7,6 +7,7 @@
  */
 
 ?>
+
 <div class="sui-box-settings-row">
 
 	<div class="sui-box-settings-col-1">
@@ -41,11 +42,10 @@
 				<div id="hustle-optin-field--submit" class="sui-builder-field sui-can_open" data-field-id="submit">
 
 					<div class="sui-builder-field-label">
-
 						<span class="sui-icon-send" aria-hidden="true"></span>
-
-						<span class="hustle-field-label"><?php esc_html_e( 'Submit', 'hustle' ); ?></span>
-
+						<span class="hustle-field-label-text">
+							<?php echo esc_html( ! empty( $elements['submit']['label'] ) ? $elements['submit']['label'] : __( 'Submit', 'hustle' ) ); ?>
+						</span>
 					</div>
 
 					<div class="sui-dropdown">
@@ -68,11 +68,10 @@
 				<div id="hustle-optin-field--gdpr" class="sui-builder-field sui-can_open sui-hidden" data-field-id="gdpr">
 
 					<div class="sui-builder-field-label">
-
 						<span class="sui-icon-gdpr" aria-hidden="true"></span>
-
-						<span class="hustle-field-label"><?php esc_html_e( 'GDPR', 'hustle' ); ?></span>
-
+						<span class="hustle-field-label-text">
+							<?php echo esc_html( ! empty( $elements['gdpr']['label'] ) ? $elements['gdpr']['label'] : __( 'GDPR', 'hustle' ) ); ?>
+						</span>
 					</div>
 
 					<div class="sui-dropdown">
@@ -101,7 +100,7 @@
 
 						<span class="sui-icon-recaptcha" aria-hidden="true"></span>
 
-						<span class="hustle-field-label"><?php esc_html_e( 'reCaptcha', 'hustle' ); ?></span>
+						<span class="hustle-field-label-text"><?php esc_html_e( 'reCaptcha', 'hustle' ); ?></span>
 
 					</div>
 

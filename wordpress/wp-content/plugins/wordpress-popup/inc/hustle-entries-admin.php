@@ -180,36 +180,6 @@ class Hustle_Entries_Admin extends Hustle_Admin_Page_Abstract {
 			'3.0.5',
 			true
 		);
-
-		// Use inline script to allow hooking into this.
-		$daterangepicker_ranges = sprintf(
-			"
-			var hustle_entries_datepicker_ranges = {
-				'%s': [moment(), moment()],
-				'%s': [moment().subtract(1,'days'), moment().subtract(1,'days')],
-				'%s': [moment().subtract(6,'days'), moment()],
-				'%s': [moment().subtract(29,'days'), moment()],
-				'%s': [moment().startOf('month'), moment().endOf('month')],
-				'%s': [moment().subtract(1,'month').startOf('month'), moment().subtract(1,'month').endOf('month')]
-			};",
-			__( 'Today', 'hustle' ),
-			__( 'Yesterday', 'hustle' ),
-			__( 'Last 7 Days', 'hustle' ),
-			__( 'Last 30 Days', 'hustle' ),
-			__( 'This Month', 'hustle' ),
-			__( 'Last Month', 'hustle' )
-		);
-
-		/**
-		 * Filter ranges to be used on submissions date range
-		 *
-		 * @since 4.0.0
-		 *
-		 * @param string $daterangepicker_ranges
-		 */
-		$daterangepicker_ranges = apply_filters( 'hustle_entries_datepicker_ranges', $daterangepicker_ranges );
-
-		wp_add_inline_script( 'hustle-entries-datepicker-range', $daterangepicker_ranges );
 	}
 
 	/**
@@ -221,9 +191,22 @@ class Hustle_Entries_Admin extends Hustle_Admin_Page_Abstract {
 	 * @return array
 	 */
 	public function register_current_json( $current_array ) {
+
+		// These labels are used in getDaterangepickerRanges(), entries.js.
+		// These keys must match the keys from there.
+		$datepicker_ranges = array(
+			'today'            => esc_html__( 'Today', 'hustle' ),
+			'yesterday'        => esc_html__( 'Yesterday', 'hustle' ),
+			'last_seven_days'  => esc_html__( 'Last 7 Days', 'hustle' ),
+			'last_thirty_days' => esc_html__( 'Last 30 Days', 'hustle' ),
+			'this_month'       => esc_html__( 'This Month', 'hustle' ),
+			'last_month'       => esc_html__( 'Last Month', 'hustle' ),
+		);
+
 		$current_array['daterangepicker'] = array(
 			'daysOfWeek' => Opt_In_Utils::get_short_days_names(),
 			'monthNames' => Opt_In_Utils::get_months(),
+			'ranges'     => $datepicker_ranges,
 		);
 
 		return $current_array;
@@ -1094,8 +1077,13 @@ class Hustle_Entries_Admin extends Hustle_Admin_Page_Abstract {
 		// print BOM Char for Excel Compatible
 		echo chr( 239 ) . chr( 187 ) . chr( 191 );// wpcs xss ok. excel generated content
 
-		// Send the generated csv lines to the browser
-		fpassthru( $fp );
+		// Send the generated csv lines to the browser.
+		if ( function_exists( 'fpassthru' ) ) {
+			fpassthru( $fp );
+		} elseif ( function_exists( 'stream_get_contents' ) ) {
+			echo stream_get_contents( $fp ); // phpcs:ignore xss ok.
+		}
+
 		exit();
 
 	}

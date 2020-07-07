@@ -215,9 +215,17 @@
 
 		<div id="hustle-appearance-feature-image-placeholder"<?php echo ( ! empty( $feature_image ) ) ? ' style="display:none;"' : ''; ?>>
 
-			<div class="sui-notice">
-				<p><?php esc_html_e( "There's no feature image. Upload an image in the \"Content\" tab to adjust fitting and image visibility on mobiles.", 'hustle' ); ?></p>
-			</div>
+			<?php
+			$this->get_html_for_options(
+				array(
+					array(
+						'type'  => 'inline_notice',
+						'icon'  => 'info',
+						'value' => esc_html__( "There's no feature image. Upload an image in the \"Content\" tab to adjust fitting and image visibility on mobiles.", 'hustle' ),
+					),
+				)
+			);
+			?>
 
 		</div>
 

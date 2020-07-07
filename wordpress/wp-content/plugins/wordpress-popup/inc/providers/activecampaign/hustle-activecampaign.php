@@ -279,6 +279,7 @@ if ( ! class_exists( 'Hustle_Activecampaign' ) ) :
 			$step_html = Hustle_Provider_Utils::get_integration_modal_title_markup(
 				__( 'Configure ActiveCampaign', 'hustle' ),
 				sprintf(
+					/* translators: 1. opening 'a' tag to ActivaCampaign login, 2. closing 'a' tag */
 					__( 'Log in to your %1$sActiveCampaign account%2$s to get your URL and API Key.', 'hustle' ),
 					'<a href="http://www.activecampaign.com/login/" target="_blank">',
 					'</a>'
@@ -286,7 +287,13 @@ if ( ! class_exists( 'Hustle_Activecampaign' ) ) :
 			);
 
 			if ( $has_errors ) {
-				$step_html .= '<span class="sui-notice sui-notice-error"><p>' . esc_html( $error_message ) . '</p></span>';
+				$error_notice = array(
+					'type'  => 'notice',
+					'icon'  => 'info',
+					'class' => 'sui-notice-error',
+					'value' => esc_html( $error_message ),
+				);
+				array_unshift( $options, $error_notice );
 			}
 
 			$step_html .= Hustle_Provider_Utils::get_html_for_options( $options );

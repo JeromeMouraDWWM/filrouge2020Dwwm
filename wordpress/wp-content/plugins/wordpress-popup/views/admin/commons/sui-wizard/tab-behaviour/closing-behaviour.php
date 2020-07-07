@@ -59,7 +59,7 @@
 							<?php checked( in_array( 'click_outside', $settings['after_close_trigger'], true ) ); ?> />
 						<span aria-hidden="true"></span>
 						<?php /* translators: 1. module type capitalized and in singular */ ?>
-						<span><?php printf( esc_html__( '%1$s closed by clicking outisde of the %1$s', 'hustle' ), esc_html( $capitalize_singular ) ); ?></span>
+						<span><?php printf( esc_html__( '%1$s closed by clicking outside of the %1$s', 'hustle' ), esc_html( $capitalize_singular ) ); ?></span>
 					</label>
 
 				<?php endif; ?>

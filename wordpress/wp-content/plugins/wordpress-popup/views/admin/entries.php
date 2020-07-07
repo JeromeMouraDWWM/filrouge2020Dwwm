@@ -16,6 +16,8 @@ $choose_image = self::$plugin_url . 'assets/images/hustle-email-lists';
 	<?php $this->render( 'admin/commons/view-documentation' ); ?>
 </div>
 
+<div id="hustle-floating-notifications-wrapper" class="sui-floating-notices"></div>
+
 <?php
 // Search Bar.
 $this->render(

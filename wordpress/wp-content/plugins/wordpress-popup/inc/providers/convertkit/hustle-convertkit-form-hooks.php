@@ -165,8 +165,8 @@ class Hustle_ConvertKit_Form_Hooks extends Hustle_Provider_Form_Hooks_Abstract {
 
 				}
 
-				if ( ! empty( $res->subscription->subscriber->state ) ) {
-					$member_status = $res->subscription->subscriber->state;
+				if ( ! empty( $res->subscription->state ) ) {
+					$member_status = $res->subscription->state;
 				}
 			}
 

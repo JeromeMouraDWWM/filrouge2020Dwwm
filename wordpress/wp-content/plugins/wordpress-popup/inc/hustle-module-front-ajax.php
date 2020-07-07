@@ -255,7 +255,6 @@ class Hustle_Module_Front_Ajax {
 			}
 
 			foreach ( $fields as $field_name => $field_data ) {
-
 				$ignored_field_types = Hustle_Entry_Model::ignored_fields();
 				if ( in_array( $field_data['type'], $ignored_field_types, true ) ) {
 					continue;
@@ -427,7 +426,7 @@ class Hustle_Module_Front_Ajax {
 				if ( ! $token ) {
 					throw new Exception(
 						! empty( $validation_message ) ? $validation_message
-						: $validation_messageesc_html__( 'reCAPTCHA must be verified to submit the form.', 'hustle' )
+						: esc_html__( 'reCAPTCHA must be verified to submit the form.', 'hustle' )
 					);
 				}
 
@@ -459,7 +458,10 @@ class Hustle_Module_Front_Ajax {
 					$selected_score = $recaptcha_field['threshold'];
 
 					if ( $selected_score > $response_body->score ) {
-						throw new Exception( esc_html__( 'reCAPTCHA validation failed. The score is too low.', 'hustle' ) );
+						throw new Exception(
+							! empty( $validation_message ) ? $validation_message
+							: esc_html__( 'reCAPTCHA validation failed. The score is too low.', 'hustle' )
+						);
 					}
 				}
 			} catch ( Exception $e ) {
@@ -489,7 +491,7 @@ class Hustle_Module_Front_Ajax {
 		// Check required fields.
 		foreach ( $required_fields as $slug ) {
 
-			if ( ! isset( $form_data[ $slug ] ) || empty( trim( $form_data[ $slug ] ) ) ) {
+			if ( ! isset( $form_data[ $slug ] ) || empty( trim( sanitize_text_field( $form_data[ $slug ] ) ) ) ) {
 				$submit_errors[ $slug ] = $fields[ $slug ]['required_error_message'];
 			}
 		}

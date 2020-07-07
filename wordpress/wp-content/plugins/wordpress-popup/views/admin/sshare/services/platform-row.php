@@ -105,8 +105,15 @@ $global_placeholders = Opt_In_Utils::get_global_placeholders();
 
 					<div class="sui-notice" style="margin-top: 10px;">
 
-						<p style="margin: 0;"><?php esc_html_e( 'This social service only supports Click counter as there is no API support for Native counter.', 'hustle' ); ?></p>
+						<div class="sui-notice-content">
 
+							<div class="sui-notice-message">
+
+								<span class="sui-notice-icon sui-icon-info sui-md" aria-hidden="true"></span>
+								<p style="margin: 0;"><?php esc_html_e( 'This social service only supports Click counter as there is no API support for Native counter.', 'hustle' ); ?></p>
+
+							</div>
+						</div>
 					</div>
 
 				<# } #>

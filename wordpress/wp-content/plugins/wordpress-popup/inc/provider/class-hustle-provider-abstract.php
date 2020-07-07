@@ -1301,8 +1301,14 @@ abstract class Hustle_Provider_Abstract implements Hustle_Provider_Interface {
 	 * @return array
 	 */
 	public function get_empty_wizard( $notice ) {
+
+		$notice_markup  = '<div class="sui-notice sui-notice-error"><div class="sui-notice-content"><div class="sui-notice-message">';
+		$notice_markup .= '<span class="sui-notice-icon sui-icon-info sui-md" aria-hidden="true"></span>';
+		$notice_markup .= '<p>' . esc_html( $notice ) . '</p>';
+		$notice_markup .= '</div></div></div>';
+
 		return array(
-			'html'    => '<div class="sui-notice sui-notice-error">' . esc_html( $notice ) . '</div>',
+			'html'    => $notice_markup,
 			'buttons' => array(
 				'close' => array(
 					'action' => 'close',

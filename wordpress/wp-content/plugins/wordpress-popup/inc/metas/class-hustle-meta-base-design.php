@@ -609,6 +609,16 @@ class Hustle_Meta_Base_Design extends Hustle_Meta {
 			if ( isset( $saved_palettes[ $palette_name ] ) ) {
 				$palette = $saved_palettes[ $palette_name ];
 
+				// We didn't saved _alt colors in custom palletes until version 4.2.1.
+				// So if such value doesn't exist let's use default title and subtitle color.
+				if ( ! isset( $palette['palette']['title_color_alt'] ) ) {
+					$palette['palette']['title_color_alt'] = $palette['palette']['title_color'];
+				}
+
+				if ( ! isset( $palette['palette']['subtitle_color_alt'] ) ) {
+					$palette['palette']['subtitle_color_alt'] = $palette['palette']['subtitle_color'];
+				}
+
 				// Merge it with a default in case we introduced new settings not present in the stored array.
 				$palette_data = array_merge( self::get_palette_file( 'gray_slate' ), $palette['palette'] );
 

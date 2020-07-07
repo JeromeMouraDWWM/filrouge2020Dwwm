@@ -21,6 +21,8 @@
 	<?php $this->render( 'admin/commons/view-documentation' ); ?>
 </div>
 
+<div id="hustle-floating-notifications-wrapper" class="sui-floating-notices"></div>
+
 <div id="<?php echo esc_attr( $page_id ); ?>" class="sui-row-with-sidenav" data-nonce="<?php echo esc_attr( wp_create_nonce( 'hustle_save_module_wizard' ) ); ?>" data-id="<?php echo $module_id ? esc_attr( $module_id ) : '-1'; ?>">
 
 	<?php

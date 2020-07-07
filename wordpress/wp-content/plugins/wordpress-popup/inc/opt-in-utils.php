@@ -698,23 +698,25 @@ class Opt_In_Utils {
 	 */
 	public static function get_select2_data( $post_type, $include_ids = null ) {
 		$data = array();
-		$args = array(
-			'numberposts' => -1,
-			'post_type'   => $post_type,
-			'post_status' => 'publish',
-			'order'       => 'ASC',
-		);
 
+		// We only make query if include_ids are set becuase in other cases the posts
+		// the data is gathered with AJAX.
 		if ( ! empty( $include_ids ) ) {
-			$args['post__in'] = $include_ids;
-		}
-
-		$posts = get_posts( $args );
-		foreach ( $posts as $post ) {
-			$data[] = (object) array(
-				'id'   => $post->ID,
-				'text' => $post->post_title,
+			$args = array(
+				'numberposts' => -1,
+				'post_type'   => $post_type,
+				'post_status' => 'publish',
+				'order'       => 'ASC',
+				'post__in'    => $include_ids,
 			);
+
+			$posts = get_posts( $args );
+			foreach ( $posts as $post ) {
+				$data[] = (object) array(
+					'id'   => $post->ID,
+					'text' => $post->post_title,
+				);
+			}
 		}
 
 		return $data;
@@ -876,23 +878,6 @@ class Opt_In_Utils {
 			return intval( $value, 10 ) * 60 * 60 * 1000;
 		}
 	}
-
-	/**
-	 * Get analytics ranges for dashboard widget
-	 *
-	 * @return array
-	 */
-	public static function get_analytic_ranges() {
-		$ranges = array(
-			1  => __( 'Last 24 hrs', 'hustle' ),
-			7  => __( 'Last 7 days', 'hustle' ),
-			30 => __( 'Last 30 days', 'hustle' ),
-		// 90 => __( 'Last 90 days', 'hustle' ),
-		);
-
-		return $ranges;
-	}
-
 
 	/**
 	 * Get social patform names

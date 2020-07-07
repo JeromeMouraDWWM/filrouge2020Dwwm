@@ -283,7 +283,7 @@ class Hustle_SShare_Model extends Hustle_Module_Model {
 		if ( $networks_only ) {
 			return apply_filters(
 				'hustle_networks_with_counter_endpoint',
-				array( 'facebook', 'twitter', 'pinterest', 'reddit', 'vkontakte' )
+				array( 'facebook', 'twitter', 'reddit', 'vkontakte' )
 			);
 		}
 
@@ -295,7 +295,6 @@ class Hustle_SShare_Model extends Hustle_Module_Model {
 				'facebook'  => 'https://graph.facebook.com/?fields=og_object{engagement{count}}&id=' . $current_link,
 				// There's no official twitter api for doing this. This alternative requires signing in.
 				'twitter'   => 'https://counts.twitcount.com/counts.php?url=' . $current_link,
-				'pinterest' => 'https://api.pinterest.com/v1/urls/count.json?url=' . $current_link,
 				'reddit'    => 'https://www.reddit.com/api/info.json?url=' . $current_link,
 				'vkontakte' => 'https://vk.com/share.php?act=count&url=' . $current_link,
 			)

@@ -239,8 +239,9 @@ $this->render_modal( $attributes );
 	$this->render(
 		'admin/commons/sui-wizard/elements/palette-optin',
 		array(
-			'module_type'  => Hustle_Module_Model::POPUP_MODULE,
-			'colors_label' => true,
+			'module_type'     => Hustle_Module_Model::POPUP_MODULE,
+			'colors_label'    => true,
+			'is_settings_tab' => true,
 		)
 	);
 	?>

@@ -77,7 +77,7 @@ if ( ! class_exists( 'Hustle_Admin_Page_Abstract' ) ) :
 		 * @since 4.2.0
 		 * @var Hustle_Layout_Helper
 		 */
-		protected $renderer;
+		private $renderer;
 
 		/**
 		 * Class constructor.
@@ -127,6 +127,19 @@ if ( ! class_exists( 'Hustle_Admin_Page_Abstract' ) ) :
 		}
 
 		/**
+		 * Gets an instance of the renderer class.
+		 *
+		 * @since 4.2.1
+		 * @return Hustle_Layout_Helper
+		 */
+		protected function get_renderer() {
+			if ( ! $this->renderer ) {
+				$this->renderer = new Hustle_Layout_Helper( $this );
+			}
+			return $this->renderer;
+		}
+
+		/**
 		 * Render the main page
 		 *
 		 * @since 4.0.1
@@ -138,9 +151,9 @@ if ( ! class_exists( 'Hustle_Admin_Page_Abstract' ) ) :
 			<main class="<?php echo esc_attr( $main_class ); ?>">
 
 				<?php
-				$template_args  = $this->get_page_template_args();
-				$this->renderer = new Hustle_Layout_Helper( $this );
-				$this->renderer->render( $this->page_template_path, $template_args );
+				$template_args = $this->get_page_template_args();
+				$renderer      = $this->get_renderer();
+				$renderer->render( $this->page_template_path, $template_args );
 				?>
 
 			</main>
@@ -261,7 +274,7 @@ if ( ! class_exists( 'Hustle_Admin_Page_Abstract' ) ) :
 			$filename = sprintf(
 				'hustle-%s-%s-%s-%s.json',
 				$module->module_type,
-				date( 'Ymd-his' ),
+				gmdate( 'Ymd-his' ),
 				get_bloginfo( 'name' ),
 				$module->module_name
 			);

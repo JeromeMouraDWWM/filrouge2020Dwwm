@@ -330,18 +330,32 @@ $this->render_modal( $attributes );
 				</div>
 
 				<?php
-				$url                 = add_query_arg(
+				$url = add_query_arg(
 					array(
 						'page'    => Hustle_Module_Admin::SETTINGS_PAGE,
 						'section' => 'recaptcha',
 					),
 					'admin.php'
 				);
-				$unavailable_message =
-					'<div class="sui-notice sui-notice-error"><p>' .
+
+				$message_string = sprintf(
 					/* translators: 1: opening 'a' tag, 2: closing 'a' tag */
-					sprintf( esc_html__( 'You haven\'t added API keys for this reCAPTCHA type in your global settings. Add your API keys %1$shere%2$s and then come back to configure this field.', 'hustle' ), '<a href="' . $url . '" target="_blank">', '</a>' ) .
-					'</p></div>';
+					esc_html__( 'You haven\'t added API keys for this reCAPTCHA type in your global settings. Add your API keys %1$shere%2$s and then come back to configure this field.', 'hustle' ),
+					'<a href="' . esc_url_raw( $url ) . '" target="_blank">',
+					'</a>'
+				);
+
+				$unavailable_message = $this->get_html_for_options(
+					array(
+						array(
+							'type'  => 'inline_notice',
+							'class' => 'sui-notice-error',
+							'icon'  => 'info',
+							'value' => $message_string,
+						),
+					),
+					true
+				);
 				?>
 
 				<div class="sui-tabs-content">

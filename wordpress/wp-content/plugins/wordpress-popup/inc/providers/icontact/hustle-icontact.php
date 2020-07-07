@@ -6,7 +6,19 @@ if ( ! class_exists( 'Hustle_Icontact' ) ) :
 		const SLUG = 'icontact';
 		// const NAME = "IContact";
 
+		/**
+		 * Stores iContact API object.
+		 *
+		 * @var object $api
+		 */
 		protected static $api;
+
+		/**
+		 * Stores errors.
+		 *
+		 * @var object $errors
+		 */
+		protected static $errors;
 
 		/**
 		 * Provider Instance
@@ -117,9 +129,10 @@ if ( ! class_exists( 'Hustle_Icontact' ) ) :
 
 			if ( empty( self::$api ) ) {
 				try {
-					self::$api = new Hustle_Icontact_Api( $app_id, $api_password, $api_username );
+					self::$api    = new Hustle_Icontact_Api( $app_id, $api_password, $api_username );
+					self::$errors = array();
 				} catch ( Exception $e ) {
-					return new WP_Error( 'something_wrong', $e->getMessage() );
+					self::$errors = array( 'api_error' => $e );
 				}
 			}
 			return self::$api;
@@ -297,17 +310,27 @@ if ( ! class_exists( 'Hustle_Icontact' ) ) :
 				),
 			);
 
+			if ( $has_errors ) {
+
+				$error_notice = array(
+					'type'  => 'notice',
+					'icon'  => 'info',
+					'class' => 'sui-notice-error',
+					'value' => esc_html( $error_message ),
+				);
+				array_unshift( $options, $error_notice );
+			}
+
 			$step_html = Hustle_Provider_Utils::get_integration_modal_title_markup(
 				__( 'Configure iContact', 'hustle' ),
 				sprintf(
+					/* translators: 1. opening 'a' tag to the iContact apps page, 2. closing 'a' tag */
 					__( 'Set up a new application in your %1$siContact account%2$s to get your credentials. Make sure your credentials have API 2.0 enabled', 'hustle' ),
 					'<a href="https://app.icontact.com/icp/core/registerapp/" target="_blank">',
 					'</a>'
 				)
 			);
-			if ( $has_errors ) {
-				$step_html .= '<span class="sui-notice sui-notice-error"><p>' . esc_html( $error_message ) . '</p></span>';
-			}
+
 			$step_html .= Hustle_Provider_Utils::get_html_for_options( $options );
 
 			$is_edit = $this->settings_are_completed( $global_multi_id );

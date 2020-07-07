@@ -38,6 +38,7 @@
 					array(
 						array(
 							'type'  => 'inline_notice',
+							'icon'  => 'info',
 							/* translators: %s module type display name */
 							'value' => sprintf( esc_html__( "You have opted for no stylesheet to be enqueued. The %s will inherit styles from your theme's CSS.", 'hustle' ), esc_html( $smallcaps_singular ) ),
 						),

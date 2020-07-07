@@ -151,6 +151,8 @@ class Hustle_MailerLite_Form_Hooks extends Hustle_Provider_Form_Hooks_Abstract {
 
 			if ( is_wp_error( $res ) ) {
 				$details = $res->get_error_message();
+			} elseif ( empty( $res ) ) {
+				$details = __( 'Something went wrong.', 'hustle' );
 			} else {
 				$is_sent       = true;
 				$member_status = $res['type'];

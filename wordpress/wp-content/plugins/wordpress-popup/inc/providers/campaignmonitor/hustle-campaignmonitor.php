@@ -310,7 +310,13 @@ if ( ! class_exists( 'Hustle_Campaignmonitor' ) ) :
 				)
 			);
 			if ( $has_errors ) {
-				$step_html .= '<span class="sui-notice sui-notice-error"><p>' . esc_html( $error_message ) . '</p></span>';
+				$error_notice = array(
+					'type'  => 'notice',
+					'icon'  => 'info',
+					'class' => 'sui-notice-error',
+					'value' => esc_html( $error_message ),
+				);
+				array_unshift( $options, $error_notice );
 			}
 			$step_html .= Hustle_Provider_Utils::get_html_for_options( $options );
 

@@ -182,7 +182,8 @@ if ( ! class_exists( 'Hustle_Activecampaign_Form_Settings' ) ) :
 					'elements' => array(
 						array(
 							'type'  => 'notice',
-							'value' => __( 'Double opt-in is only available when using forms.', 'hustle' ),
+							'icon'  => 'info',
+							'value' => esc_html__( 'Double opt-in is only available when using forms.', 'hustle' ),
 							'class' => 'sui-notice-warning',
 						),
 					),
@@ -321,6 +322,10 @@ if ( ! class_exists( 'Hustle_Activecampaign_Form_Settings' ) ) :
 			$this->is_empty_lists = empty( $lists );
 
 			if ( empty( $lists ) ) {
+
+				$empty_list_error = ! $is_form ? esc_html__( "You can't sync this provider because your account doesn't have any email list added. Please, go to your ActiveCampaign account to add one before retrying.", 'hustle' )
+					: esc_html__( "You don't have any form added to your account to sync here.", 'hustle' );
+
 				$options = array(
 					array(
 						'type'     => 'wrapper',
@@ -328,9 +333,9 @@ if ( ! class_exists( 'Hustle_Activecampaign_Form_Settings' ) ) :
 						'elements' => array(
 							'options' => array(
 								'type'  => 'notice',
+								'icon'  => 'info',
 								'class' => 'sui-notice-error',
-								'value' => ! $is_form ? __( "You can't sync this provider because your account doesn't have any email list added. Please, go to your ActiveCampaign account to add one before retrying.", 'hustle' )
-												: __( "You don't have any form added to your account to sync here.", 'hustle' ),
+								'value' => $empty_list_error,
 							),
 						),
 					),

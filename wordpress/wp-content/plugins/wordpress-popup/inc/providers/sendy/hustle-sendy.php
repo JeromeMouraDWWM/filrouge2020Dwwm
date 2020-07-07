@@ -117,42 +117,44 @@ if ( ! class_exists( 'Hustle_Sendy' ) ) :
 			$list_id_valid          = true;
 
 			if ( $is_submit ) {
-
 				$installation_url_valid = ! empty( trim( $current_data['installation_url'] ) );
 				$api_key_valid          = ! empty( trim( $current_data['api_key'] ) );
 				$list_id_valid          = ! empty( trim( $current_data['list_id'] ) );
 				$api_key_validated      = $installation_url_valid
-								 && $api_key_valid
-								 && $list_id_valid;
+								&& $api_key_valid
+								&& $list_id_valid;
 
+				// If api key is correct we try to connect with Sendy.
 				if ( $api_key_validated ) {
 					$api_key_validated = $this->validate_api_credentials( $current_data['installation_url'], $current_data['api_key'], $current_data['list_id'] );
-				}
+					if ( is_wp_error( $api_key_validated ) ) {
 
-				if ( is_wp_error( $api_key_validated ) ) {
+						$error_message = $this->provider_connection_falied();
+						$error_code    = $api_key_validated->get_error_code();
+						$has_errors    = true;
 
-					$error_message = $this->provider_connection_falied();
-					$error_code    = $api_key_validated->get_error_code();
-					$has_errors    = true;
+						switch ( $error_code ) {
+							case 'remote_error':
+								$installation_url_valid = false;
+								break;
 
-					switch ( $error_code ) {
-						case 'remote_error':
-							$installation_url_valid = false;
-							break;
+							case 'Invalid API key':
+								$api_key_valid = false;
+								break;
 
-						case 'Invalid API key':
-							$api_key_valid = false;
-							break;
+							case 'List does not exist':
+								$list_id_valid = false;
+								break;
 
-						case 'List does not exist':
-							$list_id_valid = false;
-							break;
-
-						default:
-							// TODO: add info to the logs. Last request url, data, etc. to check what happens here.
-							$error_message = __( 'Something went wrong.', 'hustle' );
-							break;
+							default:
+								// TODO: add info to the logs. Last request url, data, etc. to check what happens here.
+								$error_message = __( 'Something went wrong.', 'hustle' );
+								break;
+						}
 					}
+				} else { // If some field is missing we just set an error.
+					$error_message = $this->provider_connection_falied();
+					$has_errors    = true;
 				}
 
 				if ( ! $has_errors ) {
@@ -290,13 +292,21 @@ if ( ! class_exists( 'Hustle_Sendy' ) ) :
 				),
 			);
 
+			if ( $has_errors ) {
+				$error_notice = array(
+					'type'  => 'notice',
+					'icon'  => 'info',
+					'class' => 'sui-notice-error',
+					'value' => esc_html( $error_message ),
+				);
+				array_unshift( $options, $error_notice );
+			}
+
 			$step_html = Hustle_Provider_Utils::get_integration_modal_title_markup(
 				__( 'Configure Sendy', 'hustle' ),
 				__( 'Log in to your Sendy installation to get your API Key and list ID.', 'hustle' )
 			);
-			if ( $has_errors ) {
-				$step_html .= '<span class="sui-notice sui-notice-error"><p>' . esc_html( $error_message ) . '</p></span>';
-			}
+
 			$step_html .= Hustle_Provider_Utils::get_html_for_options( $options );
 
 			$is_edit = $this->settings_are_completed( $global_multi_id );

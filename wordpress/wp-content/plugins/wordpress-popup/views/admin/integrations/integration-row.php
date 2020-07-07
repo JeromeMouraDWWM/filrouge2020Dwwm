@@ -152,9 +152,9 @@ if ( true === $advertising ) {
 								class="sui-image"
 							/>
 
-							<?php
-						} else {
+						<?php } else { ?>
 
+							<?php
 							$banner = '';
 
 							if ( ! empty( $provider['banner_1x'] ) ) {

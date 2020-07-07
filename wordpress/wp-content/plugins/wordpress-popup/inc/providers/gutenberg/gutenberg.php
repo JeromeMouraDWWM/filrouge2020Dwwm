@@ -50,7 +50,7 @@ class Hustle_Gutenberg {
 	 * @since 4.2.0
 	 */
 	public static function gutenberg_init_frontend() {
-		if ( has_blocks() ) {
+		if ( function_exists( 'has_blocks') && has_blocks() ) {
 			// Load abstracts.
 			require_once dirname( __FILE__ ) . '/abstract-block.php';
 

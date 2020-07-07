@@ -16,6 +16,13 @@ class Opt_In_Geo {
 	const COUNTRY_IP_MAP = 'wpoi-county-id-map';
 
 	/**
+	 * Default GeoIP provider key
+	 *
+	 * @var DEFAULT_GEOIP_PROVIDER
+	 */
+	const DEFAULT_GEOIP_PROVIDER = 'geoplugin';
+
+	/**
 	 * Tries to get the public IP address of the current user.
 	 *
 	 * @return string The IP Address
@@ -121,19 +128,6 @@ class Opt_In_Geo {
 				'type'  => 'text',
 			);
 
-			$geo_service['telize'] = (object) array(
-				'label' => 'Telize',
-				'url'   => 'http://www.telize.com/geoip/%ip%',
-				'type'  => 'json',
-				'field' => 'country_code',
-			);
-
-			$geo_service['nekudo']    = (object) array(
-				'label' => 'Free Geo IP',
-				'url'   => 'http://geoip.nekudo.com/api/json/%ip%',
-				'type'  => 'json',
-				'field' => array( 'country', 'code' ),
-			);
 			$geo_service['geoplugin'] = (object) array(
 				'label' => 'GeoPlugin',
 				'url'   => 'http://www.geoplugin.net/json.gp?ip=%ip%',
@@ -146,6 +140,30 @@ class Opt_In_Geo {
 			 */
 			$geo_service = apply_filters( 'wpoi-geo-services', $geo_service );
 		}
+
+		return $geo_service;
+	}
+
+	/**
+	 * Returns a list of deprecated geo ip-resolution services.
+	 *
+	 * @since 4.2.1
+	 * @return array List of deprecated webservices.
+	 */
+	private function get_deprecated_geo_services() {
+		$geo_service = array(
+			'telize',
+			'nekudo',
+		);
+
+		/**
+		 * Hook to filter the list of depracated geo ip-resolution services.
+		 *
+		 * @since 4.2.1
+		 *
+		 * @param array
+		 */
+		$geo_service = apply_filters( 'hustle_depracated_geo_services', $geo_service );
 
 		return $geo_service;
 	}
@@ -163,7 +181,7 @@ class Opt_In_Geo {
 			if ( ! empty( $remote_ip_url ) ) {
 				$type = '';
 			} else {
-				$type = 'geoplugin';
+				$type = self::DEFAULT_GEOIP_PROVIDER;
 			}
 
 			/**
@@ -185,9 +203,33 @@ class Opt_In_Geo {
 				'type'  => 'text',
 			);
 		} else {
-			$geo_service = $this->_get_geo_services();
+			$geo_service            = $this->_get_geo_services();
+			$deprecated_geo_service = $this->get_deprecated_geo_services();
 
-			$service = isset( $geo_service[ $type ] ) ? $geo_service[ $type ] : null;
+			if ( in_array( $type, $deprecated_geo_service, true ) ) {
+				$message = sprintf(
+					/* translators: %s: geoip provider name. */
+					__( 'GeoIP provider %s is no longer available. Switching to default.', 'hustle' ),
+					$type
+				);
+				_deprecated_argument( __FUNCTION__, '4.2.1', $message );
+
+				$service = $geo_service[ self::DEFAULT_GEOIP_PROVIDER ];
+			} else {
+				if ( isset( $geo_service[ $type ] ) ) {
+					$service = $geo_service[ $type ];
+				} else {
+					if ( WP_DEBUG ) {
+						$message = sprintf(
+							/* translators: %s: geoip provider name. */
+							__( 'GeoIP provider %s does not exist. Switching to default.', 'hustle' ),
+							$type
+						);
+						trigger_error( $message, E_USER_NOTICE );
+					}
+					$service = $geo_service[ SELF::DEFAULT_GEOIP_PROVIDER ];
+				}
+			}
 		}
 
 		return $service;

@@ -458,7 +458,14 @@ if ( ! class_exists( 'Hustle_Aweber' ) ) :
 
 			$step_html = Hustle_Provider_Utils::get_integration_modal_title_markup( __( 'Configure Aweber', 'hustle' ), sprintf( __( 'Please %1$sclick here%2$s to connect to Aweber service to get your authorization code.', 'hustle' ), '<a href="' . esc_url( $auth_url ) . '" target="_blank">', '</a>' ) );
 			if ( $has_errors ) {
-				$step_html .= '<span class="sui-notice sui-notice-error"><p>' . esc_html( $error_message ) . '</p></span>';
+
+				$error_notice = array(
+					'type'  => 'notice',
+					'icon'  => 'info',
+					'class' => 'sui-notice-error',
+					'value' => esc_html( $error_message ),
+				);
+				array_unshift( $options, $error_notice );
 			}
 			$step_html .= Hustle_Provider_Utils::get_html_for_options( $options );
 

@@ -230,8 +230,8 @@ if ( ! class_exists( 'Hustle_Icontact_Api' ) ) :
 
 			$data = wp_remote_retrieve_body( $response );
 
-			if ( is_wp_error( $data ) ) {
-				return $data;
+			if ( is_wp_error( $response ) ) {
+				return $response;
 			}
 
 			return json_decode( $data, true );

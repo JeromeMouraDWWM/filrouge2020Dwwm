@@ -29,8 +29,7 @@ if ( ! class_exists( 'Hustle_Module_Admin' ) ) :
 			add_action( 'admin_init', array( $this, 'init' ) );
 			add_action( 'current_screen', array( $this, 'set_proper_current_screen' ) );
 
-			$admin_notices = new Hustle_Notifications();
-			add_action( 'current_screen', array( $admin_notices, 'load_plugins_page_notices' ) );
+			$admin_notices = Hustle_Notifications::get_instance();
 
 			if ( $this->_is_admin_module() ) {
 
@@ -75,6 +74,9 @@ if ( ! class_exists( 'Hustle_Module_Admin' ) ) :
 					);
 				}
 				$admin_notices->add_in_hustle_notices();
+			} else {
+
+				$this->handle_non_hustle_pages();
 			}
 
 			if ( $this->_is_admin_module() || wp_doing_ajax() ) {
@@ -91,6 +93,53 @@ if ( ! class_exists( 'Hustle_Module_Admin' ) ) :
 			add_filter( 'plugin_action_links', array( $this, 'add_plugin_action_links' ), 10, 4 );
 			add_filter( 'network_admin_plugin_action_links', array( $this, 'add_plugin_action_links' ), 10, 4 );
 			add_filter( 'plugin_row_meta', array( $this, 'plugin_row_meta' ), 10, 4 );
+
+			add_action( 'upgrader_process_complete', array( $this, 'upgrader_process_complete' ), 10, 2 );
+		}
+
+		/**
+		 * Flags the previous version on upgrade so we can handle notices and modals.
+		 * This action runs in the old version of the plugin, not the new one.
+		 *
+		 * @since 4.2.0
+		 *
+		 * @param WP_Upgrader $upgrader_object Instance of the WP_Upgrader class.
+		 * @param array       $data Upgrade data.
+		 */
+		public function upgrader_process_complete( $upgrader_object, $data ) {
+
+			if ( 'update' === $data['action'] && 'plugin' === $data['type'] && ! empty( $data['plugins'] ) ) {
+
+				foreach ( $data['plugins'] as $plugin ) {
+
+					// Make sure our plugin is among the ones being updated and set the flag for the previous version.
+					if ( Opt_In::$plugin_base_file === $plugin ) {
+						update_site_option( 'hustle_previous_version', Opt_In::VERSION );
+					}
+				}
+			}
+		}
+
+		/**
+		 * Handles the scripts for non-hustle pages.
+		 *
+		 * @since 4.2.0
+		 */
+		public function handle_non_hustle_pages() {
+
+			global $pagenow;
+
+			if ( 'index.php' === $pagenow || wp_doing_ajax() ) {
+
+				$analytic_settings = Hustle_Settings_Admin::get_hustle_settings( 'analytics' );
+				$analytics_enabled = ! empty( $analytic_settings['enabled'] ) && ! empty( $analytic_settings['modules'] );
+
+				// Only initialize if the analytics are enabled.
+				// That's the only use for this class for now.
+				if ( $analytics_enabled && current_user_can( 'hustle_analytics' ) ) {
+					new Hustle_Wp_Dashboard_Page( $analytic_settings );
+				}
+			}
 		}
 
 		/**
@@ -210,13 +259,14 @@ if ( ! class_exists( 'Hustle_Module_Admin' ) ) :
 					'social_sharing' => self::SOCIAL_SHARING_LISTING_PAGE,
 				),
 				'messages'    => array(
-					'dont_navigate_away'       => __( 'Changes are not saved, are you sure you want to navigate away?', 'hustle' ), // loaded everywhere but only used in wizards maybe?
-					'something_went_wrong'     => '<label class="wpmudev-label--notice"><span>' . __( 'Something went wrong. Please try again.', 'hustle' ) . '</span></label>', // everywhere.
-					'aweber_migration_success' => sprintf( esc_html__( '%s integration successfully migrated to the oAuth 2.0.', 'hustle' ), '<strong>' . esc_html__( 'Aweber', 'hustle' ) . '</strong>' ), // everywhere. views.js.
-					'integraiton_required'     => '<label class="wpmudev-label--notice"><span>' . __( 'An integration is required on opt-in module.', 'hustle' ) . '</span></label>', // wizard and integrations.
-					'module_deleted'           => __( 'Module successfully deleted.', 'hustle' ), // listing and dashboard.
-					'shortcode_copied'         => __( 'Shortcode copied successfully.', 'hustle' ), // listing and dashboard.
-					'commons'                  => array(
+					'dont_navigate_away'          => __( 'Changes are not saved, are you sure you want to navigate away?', 'hustle' ), // loaded everywhere but only used in wizards maybe?
+					'something_went_wrong'        => __( 'Something went wrong. Please try again', 'hustle' ), // everywhere.
+					'something_went_wrong_reload' => '<label class="wpmudev-label--notice"><span>' . __( 'Something went wrong. Please reload this page and try again.', 'hustle' ) . '</span></label>', // everywhere.
+					'aweber_migration_success'    => sprintf( esc_html__( '%s integration successfully migrated to the oAuth 2.0.', 'hustle' ), '<strong>' . esc_html__( 'Aweber', 'hustle' ) . '</strong>' ), // everywhere. views.js.
+					'integraiton_required'        => '<label class="wpmudev-label--notice"><span>' . __( 'An integration is required on opt-in module.', 'hustle' ) . '</span></label>', // wizard and integrations.
+					'module_deleted'              => __( 'Module successfully deleted.', 'hustle' ), // listing and dashboard.
+					'shortcode_copied'            => __( 'Shortcode copied successfully.', 'hustle' ), // listing and dashboard.
+					'commons'                     => array(
 						'published' => __( 'Published', 'hustle' ), // dashboard and wizard.
 						'draft'     => __( 'Draft', 'hustle' ), // dashboard and wizard.
 						'dismiss'   => __( 'Dismiss', 'hustle' ), // everywhere, views.js.

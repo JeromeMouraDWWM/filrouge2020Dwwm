@@ -7,13 +7,22 @@
  */
 
 ?>
-<?php if ( 0 === count( $providers ) ) : ?>
+<?php
+if ( 0 === count( $providers ) ) :
 
-<div class="sui-notice sui-notice-error">
-	<p><?php esc_html_e( "You need at least one active app to send your opt-in's submissions to. If you don't want to use any 3rd party app, you can always use the Local Hustle List to save the submissions.", 'hustle' ); ?></p>
-</div>
+	$notice_message = esc_html__( "You need at least one active app to send your opt-in's submissions to. If you don't want to use any 3rd party app, you can always use the Local Hustle List to save the submissions.", 'hustle' );
+	$notice_options = array(
+		array(
+			'type'  => 'inline_notice',
+			'class' => 'sui-notice-error',
+			'icon'  => 'info',
+			'value' => $notice_message,
+		),
+	);
+	$this->get_html_for_options( $notice_options );
 
-<?php else : ?>
+else :
+	?>
 
 <table class="sui-table hui-table--apps hui-connected" style="margin-bottom: 10px;">
 

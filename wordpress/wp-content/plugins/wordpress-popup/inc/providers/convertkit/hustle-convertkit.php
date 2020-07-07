@@ -140,8 +140,8 @@ if ( ! class_exists( 'Hustle_ConvertKit' ) ) :
 				$api_key_valid     = ! empty( trim( $current_data['api_key'] ) );
 				$api_secret_valid  = ! empty( trim( $current_data['api_secret'] ) );
 				$api_key_validated = $api_key_valid
-									 && $api_secret_valid
-									 && $this->validate_credentials( $submitted_data['api_secret'], $submitted_data['api_key'] );
+									&& $api_secret_valid
+									&& $this->validate_credentials( $submitted_data['api_secret'], $submitted_data['api_key'] );
 
 				if ( ! $api_key_validated ) {
 					$error_message = $this->provider_connection_falied();
@@ -259,10 +259,25 @@ if ( ! class_exists( 'Hustle_ConvertKit' ) ) :
 				),
 			);
 
-			$step_html = Hustle_Provider_Utils::get_integration_modal_title_markup( __( 'Configure ConvertKit', 'hustle' ), sprintf( __( 'Log in to your %1$sConvertKit%2$s account to get your API Key.', 'hustle' ), '<a href="https://app.convertkit.com/account/edit" target="_blank">', '</a>' ) );
 			if ( $has_errors ) {
-				$step_html .= '<span class="sui-notice sui-notice-error"><p>' . esc_html( $error_message ) . '</p></span>';
+				$error_notice = array(
+					'type'  => 'notice',
+					'icon'  => 'info',
+					'class' => 'sui-notice-error',
+					'value' => esc_html( $error_message ),
+				);
+				array_unshift( $options, $error_notice );
 			}
+
+			$step_html = Hustle_Provider_Utils::get_integration_modal_title_markup(
+				__( 'Configure ConvertKit', 'hustle' ),
+				sprintf(
+					/* translators: 1. opening 'a' tag to ConvertKit account, 2. closing 'a' tag */
+					__( 'Log in to your %1$sConvertKit%2$s account to get your API Key.', 'hustle' ),
+					'<a href="https://app.convertkit.com/account/edit" target="_blank">',
+					'</a>'
+				)
+			);
 			$step_html .= Hustle_Provider_Utils::get_html_for_options( $options );
 
 			$is_edit = $this->settings_are_completed( $global_multi_id );

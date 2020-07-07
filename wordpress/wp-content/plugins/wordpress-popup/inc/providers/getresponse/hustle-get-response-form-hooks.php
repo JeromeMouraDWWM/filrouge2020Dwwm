@@ -92,11 +92,18 @@ class Hustle_Get_Response_Form_Hooks extends Hustle_Provider_Form_Hooks_Abstract
 				$new_data['customFieldValues'] = array();
 
 				$cf = $api->get_custom_fields();
+
 				if ( is_wp_error( $cf ) ) {
 					throw new Exception( $cf->get_error_message() );
 				}
 
 				$custom_fields = wp_list_pluck( $cf, 'name', 'customFieldId' );
+				$phone_fields  = array_filter(
+					wp_list_pluck( $cf, 'type', 'name' ),
+					function ( $var ) {
+						return 'phone' === $var;
+					}
+				);
 				$module        = Hustle_Module_Model::instance()->get( $module_id );
 				$form_fields   = $module->get_form_fields();
 
@@ -113,11 +120,23 @@ class Hustle_Get_Response_Form_Hooks extends Hustle_Provider_Form_Hooks_Abstract
 							'hidden' => false,
 							'values' => array(),
 						);
+
 						$custom_field_id = $api->add_custom_field( $custom_field );
 						if ( is_wp_error( $custom_field_id ) ) {
 							throw new Exception( $custom_field_id->get_error_message() );
 						}
 					}
+
+					if ( in_array( $key, $phone_fields, true ) ) {
+						$value = $this->filter_phone_number( $value );
+
+						if ( empty( $value ) ) {
+							// If the phone number is probably wrong than we skip sending it to GetResponse.
+							$details = __( 'Member was added without the phone number.', 'hustle' );
+							continue;
+						}
+					}
+
 					$new_data['customFieldValues'][] = array(
 						'customFieldId' => $custom_field_id,
 						'value'         => array( $value ),
@@ -171,8 +190,9 @@ class Hustle_Get_Response_Form_Hooks extends Hustle_Provider_Form_Hooks_Abstract
 					$details = $res->get_error_message();
 				}
 			} else {
+				$details       = ( ! empty( $details ) ) ? $details : __( 'Successfully added or updated member on Get_Response list', 'hustle' );
 				$is_sent       = true;
-				$details       = __( 'Successfully added or updated member on Get_Response list', 'hustle' );
+				$details       = $details;
 				$member_status = __( 'OK', 'hustle' );
 			}
 
@@ -341,4 +361,22 @@ class Hustle_Get_Response_Form_Hooks extends Hustle_Provider_Form_Hooks_Abstract
 
 		return $type;
 	}
+
+	/**
+	 * Checks if phone number is proably correct.
+	 *
+	 * @param string $value
+	 * @return string
+	 */
+	private function filter_phone_number( $value ) {
+		// We remove unnsesary letters.
+		$value = preg_replace( '/[^+0-9]/', '', $value );
+
+		if ( strpos( $value, '+' ) === false || ! ( strlen( $value ) >= 5 && strlen( $value ) < 16 ) ) {
+			return null;
+		}
+
+		return $value;
+	}
+
 }

@@ -95,6 +95,8 @@ $free_limit_reached   = ! Hustle_Module_Admin::can_create_new_module( $module_ty
 
 </div>
 
+<div id="hustle-floating-notifications-wrapper" class="sui-floating-notices"></div>
+
 <?php if ( 0 < count( $modules ) ) { ?>
 
 	<?php

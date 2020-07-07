@@ -72,7 +72,7 @@
 			<?php } ?>
 
 			<?php
-			if ( $items ) {
+			if ( $items ) :
 
 				foreach ( $this->admin->entries_iterator() as $entry ) :
 
@@ -353,17 +353,27 @@
 
 				<?php endforeach; ?>
 
-			<?php } else { ?>
+			<?php else : ?>
 
 				<tr>
 					<td class="hui-column-notice" colspan="<?php echo count( $fields_headers ) + 2; ?>">
-						<div class="sui-notice sui-notice-error">
-							<p><?php esc_html_e( 'No entries were found.', 'hustle' ); ?></p>
-						</div>
+
+						<?php
+						$notice_options = array(
+							array(
+								'type'  => 'inline_notice',
+								'class' => 'sui-notice-error',
+								'icon'  => 'info',
+								'value' => esc_html__( 'No entries were found.', 'hustle' ),
+							),
+						);
+						$this->get_html_for_options( $notice_options );
+						?>
+
 					</td>
 				</tr>
 
-			<?php } ?>
+			<?php endif; ?>
 
 		</tbody>
 

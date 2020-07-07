@@ -9,6 +9,7 @@
 $element_type = strtolower( $type );
 $type_class   = 'optin_' . $element_type . '_' . $element_type . ' ' . $element_type;
 $for          = ( isset( $for ) ) ? $for : '';
+$attributes   = isset( $attributes ) ? $attributes : array();
 
 // FIELD TYPE: Label.
 if ( 'label' === $element_type ) { ?>
@@ -31,10 +32,28 @@ if ( 'label' === $element_type ) { ?>
 
 	<?php
 	// FIELD TYPE: Notice.
-} elseif ( 'notice' === $element_type ) { // Type textarea.
+} elseif ( 'notice' === $element_type ) {
 	?>
-	<div <?php $this->render_attributes( isset( $attributes ) ? $attributes : array() ); ?> class="sui-notice <?php echo isset( $class ) ? esc_attr( $class ) : ''; ?>">
-		<p><?php echo $value; // phpcs:ignore ?></p>
+
+	<div
+		<?php echo ! empty( $id ) ? 'id="' . esc_attr( $id ) . '"' : ''; ?>
+		class="sui-notice <?php echo isset( $class ) ? esc_attr( $class ) : ''; ?>"
+		<?php $this->render_attributes( $attributes ); ?>
+	>
+
+		<div class="sui-notice-content">
+
+			<div class="sui-notice-message">
+
+				<?php if ( ! empty( $icon ) ) : ?>
+					<span class="sui-notice-icon sui-icon-<?php echo esc_attr( $icon ); ?> sui-md" aria-hidden="true"></span>
+				<?php endif; ?>
+				<p><?php echo $value; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped, Make sure $value is properly escaped! We're not escaping it in here. ?></p>
+
+			</div>
+
+		</div>
+
 	</div>
 
 	<?php

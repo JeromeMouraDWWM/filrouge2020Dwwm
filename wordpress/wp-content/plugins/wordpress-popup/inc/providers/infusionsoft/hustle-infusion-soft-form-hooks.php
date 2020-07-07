@@ -57,6 +57,7 @@ class Hustle_InfusionSoft_Form_Hooks extends Hustle_Provider_Form_Hooks_Abstract
 			$api_key         = $addon->get_setting( 'api_key', '', $global_multi_id );
 			$account_name    = $addon->get_setting( 'account_name', '', $addon_setting_values['selected_global_multi_id'] );
 			$api             = Hustle_Infusion_Soft::api( $api_key, $account_name );
+			$message         = __( 'Successfully added or updated member on Infusionsoft list', 'hustle' );
 
 			if ( empty( $submitted_data['email'] ) ) {
 				throw new Exception( __( 'Required Field "email" was not filled by the user.', 'hustle' ) );
@@ -102,6 +103,7 @@ class Hustle_InfusionSoft_Form_Hooks extends Hustle_Provider_Form_Hooks_Abstract
 
 				$extra_custom_fields = array_diff_key( $submitted_data, array_fill_keys( $custom_fields, 1 ) );
 				$found_extra         = array();
+				$not_added_fields    = array();
 
 				if ( ! empty( $extra_custom_fields ) ) {
 
@@ -112,34 +114,28 @@ class Hustle_InfusionSoft_Form_Hooks extends Hustle_Provider_Form_Hooks_Abstract
 
 						if ( in_array( $name_from_key, $custom_fields, true ) ) {
 							$submitted_data[ $name_from_key ] = $value;
-
+							unset( $submitted_data[ $key ] );
 						} else {
-							// $res = $api->add_custom_field( $key );
-							// if ( is_wp_error( $res ) ) {
-							// $err = $res;
-							// }
 							$found_extra[ $name_from_key ] = $value;
 						}
-						unset( $submitted_data[ $key ] );
 					}
 
-					// phpcs:disable
 					// Add new custom fields.
-					// if ( ! empty( $found_extra ) ) {
-						// DON'T ADD CUSTOM FIELD SUPPORT YET.
-						// We weren't supporting it before, so let's do the upgrade to REST and then
-						// add the support once it's implemented on Infusionsoft's REST side.
+					if ( ! empty( $found_extra ) ) {
+						foreach ( $found_extra as $name => $value ) {
+							$added_field = $api->add_custom_field( $name );
 
-						// foreach( $found_extra as $name => $value ) {
-						// $api->add_custom_field( $name );
-						// }
+							if ( is_wp_error( $added_field ) || empty( $added_field ) ) {
+								$not_added_fields[] = $name;
+								// We coulnd't create the field - let not submit it.
+								unset( $submitted_data[ $name ] );
+							}
+						}
+					}
+				}
 
-						// Because we don't add custom fields yet, this Exception
-						// would stop adding the member.
-						// $message = __( "The contact was subscribed but these custom fields couldn't be added: ", 'hustle' ) . implode( ', ', array_keys( $found_extra ) );
-						// throw new Exception( $message );
-					// }
-					// phpcs:enable
+				if ( ! empty( $not_added_fields ) ) {
+					$message = __( "The contact was subscribed but these custom fields couldn't be added: ", 'hustle' ) . implode( ', ', $not_added_fields );
 				}
 
 				/**
@@ -202,7 +198,7 @@ class Hustle_InfusionSoft_Form_Hooks extends Hustle_Provider_Form_Hooks_Abstract
 
 				$response = array(
 					'is_sent'       => true,
-					'description'   => __( 'Successfully added or updated member on Infusionsoft list', 'hustle' ),
+					'description'   => $message,
 					'tags_names'    => $tags,
 					'data_sent'     => $utils->get_last_data_sent(),
 					'data_received' => $utils->get_last_data_received(),

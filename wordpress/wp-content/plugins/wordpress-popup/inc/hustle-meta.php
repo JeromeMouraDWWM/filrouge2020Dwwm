@@ -51,6 +51,10 @@ abstract class Hustle_Meta {
 
 		$defaults = $this->get_defaults();
 		if ( $defaults ) {
+			if ( isset( $defaults['form_elements'] ) && ! empty( $this->data['form_elements'] ) ) {
+				unset( $defaults['form_elements'] );
+			}
+
 			return array_replace_recursive( $defaults, $this->data );
 		}
 

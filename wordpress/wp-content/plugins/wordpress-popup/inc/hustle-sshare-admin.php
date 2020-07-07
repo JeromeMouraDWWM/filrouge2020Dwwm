@@ -15,17 +15,15 @@ if ( ! class_exists( 'Hustle_SShare_Admin' ) ) :
 		}
 
 		public function register_current_json( $current_array ) {
-
 			$current_array = parent::register_current_json( $current_array );
-
 			if ( $this->page_edit === $this->current_page ) {
-
 				$current_array['social_platforms']                = Opt_In_Utils::get_social_platform_names();
 				$current_array['social_platforms_with_endpoints'] = Hustle_SShare_Model::get_sharing_endpoints();
 				$current_array['social_platforms_with_api']       = Hustle_SShare_Model::get_networks_counter_endpoint();
 				$current_array['social_platforms_data']           = array(
 					'email_message_default' => __( "I've found an excellent article on {page_url} which may interest you.", 'hustle' ),
 				);
+				$current_array['palettes']['sshare_defaults']     = $this->module->get_design()->defaults;
 			}
 
 			return $current_array;

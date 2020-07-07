@@ -667,7 +667,16 @@ $image_2x = self::$plugin_url . 'assets/images/hustle-visibility@2x.png';
 			<div class="sui-tab-content" data-tab-content="mobiles">
 
 				<div class="sui-notice">
-					<p style="margin: 0;"><?php esc_html_e( 'Mobile devices include both Phone and Tablet.', 'hustle' ); ?></p>
+
+					<div class="sui-notice-content">
+
+						<div class="sui-notice-message">
+
+							<span class="sui-notice-icon sui-icon-info sui-md" aria-hidden="true"></span>
+							<p style="margin-top: 0;"><?php esc_html_e( 'Mobile devices include both Phone and Tablet.', 'hustle' ); ?></p>
+
+						</div>
+					</div>
 				</div>
 
 			</div>
@@ -978,8 +987,18 @@ $image_2x = self::$plugin_url . 'assets/images/hustle-visibility@2x.png';
 	</div>
 
 	<div class="sui-notice" style="margin-top: 20px;">
-		<?php /* translators: 1. opening 'strong' tag, 2. closing 'strong' tag */ ?>
-		<p style="margin-bottom: 0;"><?php printf( esc_html__( 'You might also want to combine this condition along with %1$sVisitor\'s logged in status%2$s.', 'hustle' ), '<strong>', '</strong>' ); ?></p>
+
+		<div class="sui-notice-content">
+
+			<div class="sui-notice-message">
+
+				<span class="sui-notice-icon sui-icon-info sui-md" aria-hidden="true"></span>
+
+				<?php /* translators: 1. opening 'strong' tag, 2. closing 'strong' tag */ ?>
+				<p style="margin-top: 0;"><?php printf( esc_html__( 'You might also want to combine this condition along with %1$sVisitor\'s logged in status%2$s.', 'hustle' ), '<strong>', '</strong>' ); ?></p>
+
+			</div>
+		</div>
 	</div>
 
 </script>
@@ -1616,6 +1635,146 @@ $image_2x = self::$plugin_url . 'assets/images/hustle-visibility@2x.png';
 
 </script>
 
+<?php // RULE: Cookie is set. ?>
+<script id="hustle-visibility-rule-tpl--cookie_set" type="text/template">
+
+	<label class="sui-label"><?php esc_html_e( 'If a browser cookie', 'hustle' ); ?></label>
+
+	<div class="sui-side-tabs">
+
+		<div class="sui-tabs-menu" data-tabs>
+
+			<label for="{{ groupId }}-{{ type }}-rule--cookie-set-exists"
+				class="sui-tab-item">
+				<input type="radio"
+					name="{{ groupId }}-{{ type }}-rule--cookie-set"
+					value="exists"
+					id="{{ groupId }}-{{ type }}-rule--cookie-set-exists"
+					data-attribute="filter_type"
+					{{ _.checked( filter_type, 'exists' ) }} />
+				<?php esc_html_e( 'Exists', 'hustle' ); ?>
+			</label>
+
+			<label for="{{ groupId }}-{{ type }}-rule--cookie-set-doesnt_exists"
+				class="sui-tab-item">
+				<input type="radio"
+					name="{{ groupId }}-{{ type }}-rule--cookie-set"
+					value="doesnt_exists"
+					id="{{ groupId }}-{{ type }}-rule--cookie-set-doesnt_exists"
+					data-attribute="filter_type"
+					{{ _.checked( filter_type, 'doesnt_exists' ) }} />
+				<?php esc_html_e( 'Doesn\'t exist', 'hustle' ); ?>
+			</label>
+
+		</div>
+
+		<div data-panes>
+
+			<div class="sui-tab-boxed <# if( filter_type === 'exists' ) { #>active<# } #>">
+
+				<div class="sui-form-field">
+
+					<label class="sui-label"><?php esc_html_e( 'Cookie name', 'hustle' ); ?></label>
+
+					<input
+						type="text"
+						value="{{ cookie_name }}"
+						placeholder="<?php esc_html_e( 'Enter cookie name', 'hustle' ); ?>"
+						id="{{ groupId }}-{{ type }}-cookie-name"
+						class="sui-form-control"
+						data-attribute="cookie_name"
+						name="{{ groupId }}-{{ type }}-cookie-name"
+					/>
+
+				</div>
+				<div class="select-content-switcher-wrapper" style="margin-bottom: 0;">
+					<div class="sui-form-field" style="margin-bottom: 0;">
+
+						<label class="sui-label" style="margin-top: 26px;"><?php esc_html_e( 'Value', 'hustle' ); ?></label>
+
+						<select
+							id="{{ groupId }}-{{ type }}-cookie_value_conditions"
+							name="{{ groupId }}-{{ type }}-cookie_value_conditions"
+							class="select-content-switcher"
+							data-val="cookie_value_conditions"
+							data-attribute="cookie_value_conditions"
+							data-content-on="equals,contains,matches_pattern,doesnt_match_pattern,less_than,less_equal_than,greater_than,greater_equal_than,doesnt_contains,doesnt_equals"
+						>
+							<# _.each( _.keys( optinVars.wp_cookie_set ), function( key ) { #>
+								<option
+									value="{{ key }}"
+									{{ _.selected( ( cookie_value_conditions === key ), true) }}
+									<# if ( _.contains( ['less_than', 'greater_than', 'less_equal_than', 'greater_equal_than' ], key ) ) { #>
+										data-switcher-menu="number"
+									<# } else if ( _.contains( [ 'anything' ], key ) ) { #>
+										data-switcher-menu="none"
+									<# } else { #>
+										data-switcher-menu="text"
+									<# } #>
+								>
+									{{ optinVars.wp_cookie_set[key] }}
+								</option>
+							<# }); #>
+						</select>
+
+					</div>
+					<div class="sui-form-field select-switcher-content" data-switcher-content="text" style="margin-top: 5px; margin-bottom: 0;">
+
+						<input
+							type="text"
+							value="{{ cookie_value }}"
+							placeholder="<?php esc_html_e( 'Enter cookie value', 'hustle' ); ?>"
+							id="{{ groupId }}-{{ type }}-cookie-value"
+							class="sui-form-control"
+							data-attribute="cookie_value"
+							name="{{ groupId }}-{{ type }}-cookie-value"
+							style="margin-top:10px;"
+						/>
+
+					</div>
+
+					<div class="sui-form-field select-switcher-content" data-switcher-content="number" style="margin-top: 5px; margin-bottom: 0;">
+
+						<input
+							type="number"
+							value="{{ cookie_value }}"
+							placeholder="<?php esc_html_e( 'Enter cookie value', 'hustle' ); ?>"
+							id="{{ groupId }}-{{ type }}-cookie-value"
+							class="sui-form-control"
+							data-attribute="cookie_value"
+							name="{{ groupId }}-{{ type }}-cookie-value"
+							style="margin-top:10px;"
+						/>
+
+					</div>
+				</div>
+
+			</div>
+
+			<div class="sui-tab-boxed <# if( filter_type === 'doesnt_exists' ) { #>active<# } #>">
+
+				<div class="sui-form-field">
+
+					<label class="sui-label"><?php esc_html_e( 'Cookie name', 'hustle' ); ?></label>
+
+					<input
+						type="text"
+						value="{{ cookie_name }}"
+						placeholder="<?php esc_html_e( 'Enter cookie name', 'hustle' ); ?>"
+						id="{{ groupId }}-{{ type }}-cookie-name"
+						class="sui-form-control"
+						data-attribute="cookie_name"
+						name="{{ groupId }}-{{ type }}-cookie-name"
+					/>
+
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+
+</script>
 <?php
 
 /**

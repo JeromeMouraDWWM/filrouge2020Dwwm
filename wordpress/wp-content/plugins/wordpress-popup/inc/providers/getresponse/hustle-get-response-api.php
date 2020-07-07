@@ -153,7 +153,7 @@ class Hustle_Get_Response_Api {
 	}
 
 	public function get_custom_fields() {
-		$args = array( 'fields' => 'name' );
+		$args = array( 'fields' => 'name, type' );
 		$res  = $this->_get( 'custom-fields', $args );
 
 		return $res;

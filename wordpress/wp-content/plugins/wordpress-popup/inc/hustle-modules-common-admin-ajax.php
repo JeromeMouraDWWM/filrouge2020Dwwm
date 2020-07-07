@@ -291,9 +291,9 @@ if ( ! class_exists( 'Hustle_Modules_Common_Admin_Ajax' ) ) :
 				throw new Exception( 'invalid_permissions' );
 			}
 
-			$is_published = '1' === $module->active;
+			$was_published = '1' === $module->active;
 
-			if ( $is_published ) {
+			if ( $was_published ) {
 				$module->deactivate();
 			} else {
 				$module->activate();
@@ -301,8 +301,9 @@ if ( ! class_exists( 'Hustle_Modules_Common_Admin_Ajax' ) ) :
 
 			wp_send_json_success(
 				array(
-					'callback'           => 'actionToggleStatus',
-					'was_module_enabled' => $is_published,
+					'callback'            => 'actionToggleStatus',
+					'is_active'           => ! $was_published,
+					'is_tracking_enabled' => ! empty( $module->get_tracking_types() ),
 				)
 			);
 		}
@@ -382,11 +383,16 @@ if ( ! class_exists( 'Hustle_Modules_Common_Admin_Ajax' ) ) :
 				}
 
 				// Get the file's content.
-				$overrides    = array(
+				$overrides = array(
 					'test_form' => false,
 					'test_type' => false,
 				);
-				$wp_file      = wp_handle_upload( $file, $overrides );
+
+				$wp_file = wp_handle_upload( $file, $overrides );
+				if ( empty( $wp_file['file'] ) ) {
+					throw new Exception( __( "The file can't be empty", 'hustle' ) );
+				}
+
 				$filename     = $wp_file['file'];
 				$file_content = file_get_contents( $filename ); // phpcs:ignore WordPress.WP.AlternativeFunctions
 
@@ -450,7 +456,7 @@ if ( ! class_exists( 'Hustle_Modules_Common_Admin_Ajax' ) ) :
 			} catch ( Exception $e ) {
 				wp_send_json_error(
 					array(
-						'callback' => 'actionDisplayError',
+						'callback' => 'actionImportDisplayError',
 						'message'  => $e->getMessage(),
 					)
 				);
@@ -506,6 +512,7 @@ if ( ! class_exists( 'Hustle_Modules_Common_Admin_Ajax' ) ) :
 
 			$response = array(
 				'is_embed_or_sshare' => $is_embed_or_sshare,
+				'is_active'          => '1' === $module->active,
 				'callback'           => 'actionToggleTracking',
 			);
 
@@ -754,7 +761,7 @@ if ( ! class_exists( 'Hustle_Modules_Common_Admin_Ajax' ) ) :
 						break;
 
 					case 'clone':
-						if ( $can_create ) {
+						if ( $can_create && Hustle_Module_Admin::can_create_new_module( $module->module_type ) ) {
 							$module->duplicate_module();
 						}
 						break;

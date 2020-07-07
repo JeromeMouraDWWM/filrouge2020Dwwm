@@ -44,6 +44,16 @@ $palette_optin = array(
 						'value' => 'subtitle_color',
 						'alpha' => 'false',
 					),
+					'popup_title_color_alt'    => array(
+						'name'  => esc_html__( 'Informational title color', 'hustle' ),
+						'value' => 'title_color_alt',
+						'alpha' => 'false',
+					),
+					'popup_subtitle_color_alt' => array(
+						'name'  => esc_html__( 'Informational subtitle color', 'hustle' ),
+						'value' => 'subtitle_color_alt',
+						'alpha' => 'false',
+					),
 					'popup_content_color'  => array(
 						'name'  => esc_html__( 'Content color', 'hustle' ),
 						'value' => 'content_color',
@@ -737,96 +747,109 @@ $palette_optin = array(
 	),
 	'additional' => array(
 		'group_name' => esc_html__( 'Additional Settings', 'hustle' ),
-
+		'group_states' => array(
+			'default' => array(
+				'name'    => esc_html__( 'Default', 'hustle' ),
+				'current' => true,
+				'colors'  => array(
+					'close_button'           => array(
+						'name'  => esc_html__( 'Close button', 'hustle' ),
+						'value' => 'close_button_static_color',
+						'alpha' => 'true',
+					),
+					'nsa_link'               => array(
+						'name'  => esc_html__( 'Never see link', 'hustle' ),
+						'value' => 'never_see_link_static',
+						'alpha' => 'true',
+					),
+					'overlay_color'          => array(
+						'name'  => esc_html__( 'Pop-up mask', 'hustle' ),
+						'value' => 'overlay_bg',
+						'alpha' => 'true',
+					),
+					'recaptcha_text'         => array(
+						'name'  => esc_html__( 'reCAPTCHA Copy Text', 'hustle' ),
+						'value' => 'recaptcha_copy_text',
+						'alpha' => 'true',
+					),
+					'recaptcha_link_default' => array(
+						'name'  => esc_html__( 'reCAPTCHA Copy Link(s)', 'hustle' ),
+						'value' => 'recaptcha_copy_link_default',
+						'alpha' => 'true',
+					),
+				),
+			),
+			'hover'   => array(
+				'name'    => esc_html__( 'Hover', 'hustle' ),
+				'current' => false,
+				'colors'  => array(
+					'close_button'         => array(
+						'name'  => esc_html__( 'Close button', 'hustle' ),
+						'value' => 'close_button_hover_color',
+						'alpha' => 'true',
+					),
+					'nsa_link'             => array(
+						'name'  => esc_html__( 'Never see link', 'hustle' ),
+						'value' => 'never_see_link_hover',
+						'alpha' => 'true',
+					),
+					'recaptcha_link_hover' => array(
+						'name'  => esc_html__( 'reCAPTCHA Copy Link(s)', 'hustle' ),
+						'value' => 'recaptcha_copy_link_hover',
+						'alpha' => 'true',
+					),
+				),
+			),
+			'active'  => array(
+				'name'    => esc_html__( 'Active', 'hustle' ),
+				'current' => false,
+				'colors'  => array(
+					'close_button'         => array(
+						'name'  => esc_html__( 'Close button', 'hustle' ),
+						'value' => 'close_button_active_color',
+						'alpha' => 'true',
+					),
+					'nsa_link'             => array(
+						'name'  => esc_html__( 'Never see link', 'hustle' ),
+						'value' => 'never_see_link_active',
+						'alpha' => 'true',
+					),
+					'recaptcha_link_focus' => array(
+						'name'  => esc_html__( 'reCAPTCHA Copy Link(s)', 'hustle' ),
+						'value' => 'recaptcha_copy_link_focus',
+						'alpha' => 'true',
+					),
+				),
+			),
+		),
 	),
 );
 
+// As this file is also used in setting we're adding, removing and changing some fields for this matter.
+if ( ! $is_settings_tab ) {
+	unset(
+		$palette_optin['content']['group_states']['default']['colors']['popup_title_color_alt'],
+		$palette_optin['content']['group_states']['default']['colors']['popup_subtitle_color_alt']
+	);
+} else {
+	$palette_optin['content']['group_states']['default']['colors']['popup_title_color']['name']    = esc_html__( 'Optin title color', 'hustle' );
+	$palette_optin['content']['group_states']['default']['colors']['popup_subtitle_color']['name'] = esc_html__( 'Optin subtitle color', 'hustle' );
+}
+
 // Unset non existent elements for module types.
 if ( Hustle_Module_Model::EMBEDDED_MODULE !== $module_type ) {
-
-	$palette_optin['additional']['group_states'] = array(
-		'default' => array(
-			'name'    => esc_html__( 'Default', 'hustle' ),
-			'current' => true,
-			'colors'  => array(
-				'close_button'           => array(
-					'name'  => esc_html__( 'Close button', 'hustle' ),
-					'value' => 'close_button_static_color',
-					'alpha' => 'true',
-				),
-				'nsa_link'               => array(
-					'name'  => esc_html__( 'Never see link', 'hustle' ),
-					'value' => 'never_see_link_static',
-					'alpha' => 'true',
-				),
-				'overlay_color'          => array(
-					'name'  => esc_html__( 'Pop-up mask', 'hustle' ),
-					'value' => 'overlay_bg',
-					'alpha' => 'true',
-				),
-				'recaptcha_text'         => array(
-					'name'  => esc_html__( 'reCAPTCHA Copy Text', 'hustle' ),
-					'value' => 'recaptcha_copy_text',
-					'alpha' => 'true',
-				),
-				'recaptcha_link_default' => array(
-					'name'  => esc_html__( 'reCAPTCHA Copy Link(s)', 'hustle' ),
-					'value' => 'recaptcha_copy_link_default',
-					'alpha' => 'true',
-				),
-			),
-		),
-		'hover'   => array(
-			'name'    => esc_html__( 'Hover', 'hustle' ),
-			'current' => false,
-			'colors'  => array(
-				'close_button'         => array(
-					'name'  => esc_html__( 'Close button', 'hustle' ),
-					'value' => 'close_button_hover_color',
-					'alpha' => 'true',
-				),
-				'nsa_link'             => array(
-					'name'  => esc_html__( 'Never see link', 'hustle' ),
-					'value' => 'never_see_link_hover',
-					'alpha' => 'true',
-				),
-				'recaptcha_link_hover' => array(
-					'name'  => esc_html__( 'reCAPTCHA Copy Link(s)', 'hustle' ),
-					'value' => 'recaptcha_copy_link_hover',
-					'alpha' => 'true',
-				),
-			),
-		),
-		'active'  => array(
-			'name'    => esc_html__( 'Active', 'hustle' ),
-			'current' => false,
-			'colors'  => array(
-				'close_button'         => array(
-					'name'  => esc_html__( 'Close button', 'hustle' ),
-					'value' => 'close_button_active_color',
-					'alpha' => 'true',
-				),
-				'nsa_link'             => array(
-					'name'  => esc_html__( 'Never see link', 'hustle' ),
-					'value' => 'never_see_link_active',
-					'alpha' => 'true',
-				),
-				'recaptcha_link_focus' => array(
-					'name'  => esc_html__( 'reCAPTCHA Copy Link(s)', 'hustle' ),
-					'value' => 'recaptcha_copy_link_focus',
-					'alpha' => 'true',
-				),
-			),
-		),
-	);
-
 	if ( Hustle_Module_Model::SLIDEIN_MODULE === $module_type ) {
 		unset( $palette_optin['additional']['group_states']['default']['colors']['overlay_color'] );
 	}
 } else {
-
-	unset( $palette_optin['additional'] );
-
+	unset( $palette_optin['additional']['group_states']['default']['colors']['overlay_color'] );
+	unset( $palette_optin['additional']['group_states']['default']['colors']['nsa_link'] );
+	unset( $palette_optin['additional']['group_states']['default']['colors']['close_button'] );
+	unset( $palette_optin['additional']['group_states']['hover']['colors']['nsa_link'] );
+	unset( $palette_optin['additional']['group_states']['hover']['colors']['close_button'] );
+	unset( $palette_optin['additional']['group_states']['hover']['colors']['close_button'] );
+	unset( $palette_optin['additional']['group_states']['active']['colors']['close_button'] );
+	unset( $palette_optin['additional']['group_states']['active']['colors']['nsa_link'] );
 }
 ?>
 

@@ -13,7 +13,7 @@ class Hustle_Dashboard_Admin extends Hustle_Admin_Page_Abstract {
 
 	const WELCOME_MODAL_NAME   = 'welcome_modal';
 	const MIGRATE_MODAL_NAME   = 'migrate_modal';
-	const HIGHLIGHT_MODAL_NAME = 'release_highlight_modal';
+	const HIGHLIGHT_MODAL_NAME = 'release_highlight_modal_421';
 	const MIGRATE_NOTICE_NAME  = 'migrate_notice';
 
 	/**
@@ -162,6 +162,13 @@ class Hustle_Dashboard_Admin extends Hustle_Admin_Page_Abstract {
 			'months_full'  => Opt_In_Utils::get_months(),
 			'months_short' => Opt_In_Utils::get_months( 'short' ),
 		);
+
+		$args = array(
+			'page'    => Hustle_Module_Admin::SETTINGS_PAGE,
+			'section' => 'analytics',
+		);
+		// Used for the highlight modal in 4.2.1.
+		$current_array['analytics_settings_url'] = esc_url_raw( add_query_arg( $args, admin_url( 'admin.php' ) ) );
 
 		// Also defined in listing.
 		$current_array['single_module_action_nonce'] = wp_create_nonce( 'hustle_single_action' );

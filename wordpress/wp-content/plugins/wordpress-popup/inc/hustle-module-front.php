@@ -216,7 +216,7 @@ class Hustle_Module_Front {
 		if ( ! empty( $modules_deps['adblocker'] ) ) {
 			wp_enqueue_script(
 				'hustle_front_ads',
-				Opt_In::$plugin_url . 'assets/js/ads.js',
+				Opt_In::$plugin_url . 'assets/js/dfp.js',
 				array(),
 				Opt_In::VERSION,
 				true
@@ -226,6 +226,17 @@ class Hustle_Module_Front {
 		// Queue recaptchas if required. Only added if the keys are set.
 		if ( ! empty( $modules_deps['recaptcha'] ) ) {
 			$this->add_recaptcha_script( $modules_deps['recaptcha']['language'] );
+		}
+
+		// Queue Pinteres if reuqired.
+		if ( ! empty( $modules_deps['pinterest'] ) ) {
+			wp_enqueue_script(
+				'hustle_sshare_pinterest',
+				'//assets.pinterest.com/js/pinit.js',
+				array(),
+				Opt_In::VERSION,
+				true
+			);
 		}
 
 		self::add_hui_scripts();
@@ -285,7 +296,7 @@ class Hustle_Module_Front {
 
 		if ( empty( $language ) || 'automatic' === $language ) {
 			$language = ! empty( $recaptcha_settings['language'] ) && 'automatic' !== $recaptcha_settings['language']
-				? $recaptcha_settings['language'] : determine_locale();
+				? $recaptcha_settings['language'] : get_locale();
 		}
 		$script_url = 'https://www.google.com/recaptcha/api.js?render=explicit&hl=' . $language;
 
@@ -707,6 +718,7 @@ class Hustle_Module_Front {
 		$select2_found      = false;
 		$recaptcha_language = '';
 		$enqueue_adblock    = false;
+		$pinterest_found    = false;
 
 		foreach ( $modules as $module ) {
 
@@ -807,6 +819,14 @@ class Hustle_Module_Front {
 
 				}
 			} else { // Social sharing modules.
+				$ssharing_networks = $module->get_content()->__get( 'social_icons' );
+				if (
+					! empty( $ssharing_networks )
+					&& in_array( 'pinterest', array_keys( $ssharing_networks ), true )
+					&& empty( $ssharing_networks['pinterest']['link'] )
+				) {
+					$pinterest_found = true;
+				}
 				$this->_inline_modules[]     = $module;
 				$this->_non_inline_modules[] = $module;
 			}
@@ -835,6 +855,10 @@ class Hustle_Module_Front {
 		// Set flag for scripts: recaptcha field.
 		if ( $recaptcha_found ) {
 			$this->modules_data_for_scripts['recaptcha'] = array( 'language' => $recaptcha_language );
+		}
+
+		if ( $pinterest_found ) {
+			$this->modules_data_for_scripts['pinterest'] = true;
 		}
 	}
 

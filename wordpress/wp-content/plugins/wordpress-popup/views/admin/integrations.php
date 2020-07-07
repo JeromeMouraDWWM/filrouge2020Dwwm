@@ -14,6 +14,8 @@
 	<?php $this->render( 'admin/commons/view-documentation' ); ?>
 </div>
 
+<div id="hustle-floating-notifications-wrapper" class="sui-floating-notices"></div>
+
 <!-- BOX: Summary -->
 <?php $this->render( 'admin/integrations-page/summary', array( 'sui' => $sui ) ); ?>
 

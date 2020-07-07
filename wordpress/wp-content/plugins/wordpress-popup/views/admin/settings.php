@@ -19,9 +19,9 @@ $sections = array(
 			'palettes' => Hustle_Settings_Admin::get_custom_color_palettes(),
 		),
 	),
-	//'analytics'     => array(
-	//	'label' => __( 'Dashboard Analytics', 'hustle' ),
-	//),
+	'analytics'     => array(
+		'label' => __( 'Dashboard Analytics', 'hustle' ),
+	),
 	'data'          => array(
 		'label' => __( 'Data', 'hustle' ),
 	),
@@ -59,6 +59,8 @@ $sections = array(
 	<h1 class="sui-header-title"><?php esc_html_e( 'Settings', 'hustle' ); ?></h1>
 	<?php $this->render( 'admin/commons/view-documentation' ); ?>
 </div>
+
+<div id="hustle-floating-notifications-wrapper" class="sui-floating-notices"></div>
 
 <div class="sui-row-with-sidenav">
 

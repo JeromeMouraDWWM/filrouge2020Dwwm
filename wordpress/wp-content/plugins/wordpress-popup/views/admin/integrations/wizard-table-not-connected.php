@@ -1,15 +1,13 @@
 <?php
 /**
- * Message for when no integrations are connected to the module.
+ * List of available integrations (already connected globally) to connect the module to.
  *
  * @package Hustle
  * @since 4.0.0
  */
 
-?>
-<?php if ( 0 === count( $providers ) ) : ?>
+if ( 0 === count( $providers ) ) :
 
-	<?php
 	$module_type       = Hustle_Module_Model::instance()->get_module_type_by_module_id( $module_id );
 	$display_type_name = Opt_In_Utils::get_module_type_display_name( $module_type );
 
@@ -29,12 +27,18 @@
 			esc_html( $display_type_name )
 		);
 	}
-	?>
-	<div class="sui-notice">
-		<p><?php echo $empty_providers_msg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
-	</div>
 
-<?php else : ?>
+	$notice_options = array(
+		array(
+			'type'  => 'inline_notice',
+			'icon'  => 'info',
+			'value' => $empty_providers_msg,
+		),
+	);
+	$this->get_html_for_options( $notice_options );
+
+else :
+	?>
 
 	<table class="sui-table hui-table--apps" style="margin-bottom: 10px;">
 

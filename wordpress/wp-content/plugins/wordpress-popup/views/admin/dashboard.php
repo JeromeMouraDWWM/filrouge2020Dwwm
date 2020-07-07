@@ -19,6 +19,9 @@ $has_modules = ( count( $popups ) + count( $slideins ) + count( $embeds ) ) > 0;
 	<h1 class="sui-header-title"><?php esc_html_e( 'Dashboard', 'hustle' ); ?></h1>
 	<?php $this->render( 'admin/commons/view-documentation' ); ?>
 </div>
+
+<div id="hustle-floating-notifications-wrapper" class="sui-floating-notices"></div>
+
 <div class="<?php echo esc_attr( implode( ' ', $sui['summary']['classes'] ) ); ?>">
 	<div class="sui-summary-image-space" aria-hidden="true" style="<?php echo esc_attr( $sui['summary']['style'] ); ?>"></div>
 	<div class="sui-summary-segment">

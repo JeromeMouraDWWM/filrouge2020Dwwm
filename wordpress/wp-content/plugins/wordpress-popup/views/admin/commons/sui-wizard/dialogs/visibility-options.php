@@ -82,6 +82,7 @@ ob_start();
 			'user_registration'        => __( 'After Registration', 'hustle' ),
 			'shown_less_than'          => __( 'Number of times visitor has seen', 'hustle' ),
 			'visitor_commented'        => __( 'Visitor Commented Before', 'hustle' ),
+			'cookie_set'               => __( 'Browser Cookie', 'hustle' ),
 		);
 		$conditions       = array_merge( $first_conditions, $post_types, $last_conditions );
 

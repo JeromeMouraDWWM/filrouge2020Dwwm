@@ -36,7 +36,8 @@ if ( $section && 'analytics' !== $section ) {
 						array(
 							array(
 								'type'  => 'inline_notice',
-								'class' => 'sui-notice-info',
+								'class' => 'sui-notice-success',
+								'icon'  => 'check-tick',
 								'value' => esc_html__( 'Analytics tracking is enabled, and the widget is visible to the selected user roles in their dashboard.', 'hustle' ),
 							),
 						)

@@ -132,22 +132,18 @@ if ( empty( $dashboard ) && $can_edit ) :
 	?>
 
 	<li>
-		<?php
-		if ( ! $is_embedded_or_social ) :
-
-			$is_tracking_enabled = $module->is_tracking_enabled( $module->module_type );
-			?>
+		<?php if ( ! $is_embedded_or_social ) : ?>
 
 			<button
 				class="hustle-single-module-button-action hustle-onload-icon-action"
 				data-module-id="<?php echo esc_attr( $module->id ); ?>"
 				data-hustle-action="toggle-tracking"
 			>
-				<span class="<?php echo $is_tracking_enabled ? '' : 'sui-hidden'; ?>">
+				<span class="hustle-toggle-tracking-button-description<?php echo $is_tracking_disabled ? ' sui-hidden' : ''; ?>">
 					<span class="sui-icon-tracking-disabled" aria-hidden="true"></span>
 					<?php esc_html_e( 'Disable Tracking', 'hustle' ); ?>
 				</span>
-				<span class="<?php echo $is_tracking_enabled ? ' sui-hidden' : ''; ?>">
+				<span class="hustle-toggle-tracking-button-description<?php echo $is_tracking_disabled ? '' : ' sui-hidden'; ?>">
 					<span class="sui-icon-graph-line" aria-hidden="true"></span>
 					<?php esc_html_e( 'Enable Tracking', 'hustle' ); ?>
 				</span>

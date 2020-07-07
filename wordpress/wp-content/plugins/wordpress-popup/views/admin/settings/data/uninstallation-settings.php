@@ -63,6 +63,7 @@ $reset_settings_uninstall = '1' === $settings['reset_settings_uninstall']; ?>
 							array(
 								array(
 									'type'  => 'inline_notice',
+									'icon'  => 'info',
 									'value' => esc_html__( 'This will delete all the modules and their data - submissions, conversion data, and plugin settings when the plugin is uninstalled.', 'hustle' ),
 								),
 							)

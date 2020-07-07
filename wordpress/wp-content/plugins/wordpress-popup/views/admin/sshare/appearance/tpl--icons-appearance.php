@@ -415,7 +415,16 @@
 
 	<div class="sui-box-settings-col-2">
 		<div class="sui-notice">
-			<p><?php echo esc_html( $disabled_message ); ?></p>
+
+			<div class="sui-notice-content">
+
+				<div class="sui-notice-message">
+
+					<span class="sui-notice-icon sui-icon-info sui-md" aria-hidden="true"></span>
+					<p><?php echo esc_html( $disabled_message ); ?></p>
+
+				</div>
+			</div>
 		</div>
 	</div>
 

@@ -173,20 +173,20 @@ class Hustle_SendinBlue_Form_Hooks extends Hustle_Provider_Form_Hooks_Abstract {
 				$details       = __( 'Successfully added or updated member on SendinBlue list', 'hustle' );
 				$member_status = __( 'OK', 'hustle' );
 			}
+
+			$entry_fields = array(
+				array(
+					'name'  => 'status',
+					'value' => array(
+						'is_sent'       => $is_sent,
+						'description'   => $details,
+						'member_status' => $member_status,
+					),
+				),
+			);
 		} catch ( Exception $e ) {
 			$entry_fields = $this->exception( $e );
 		}
-
-		$entry_fields = array(
-			array(
-				'name'  => 'status',
-				'value' => array(
-					'is_sent'       => $is_sent,
-					'description'   => $details,
-					'member_status' => $member_status,
-				),
-			),
-		);
 
 		if ( ! empty( $addon_setting_values['list_name'] ) ) {
 			$entry_fields[0]['value']['list_name'] = $addon_setting_values['list_name'];

@@ -24,6 +24,13 @@ class Hustle_Tracking_Model {
 	 */
 	private static $instance = null;
 
+	/**
+	 * WordPress' wpdb class.
+	 *
+	 * @since 4.2.1
+	 * @var Object
+	 */
+	private $wpdb;
 
 	/**
 	 * Return the Tracking_Model instance
@@ -44,7 +51,10 @@ class Hustle_Tracking_Model {
 	 * @since 4.0
 	 */
 	public function __construct() {
+		global $wpdb;
+
 		$this->table_name = Hustle_Db::tracking_table();
+		$this->wpdb       = $wpdb;
 	}
 
 	/**
@@ -770,121 +780,58 @@ class Hustle_Tracking_Model {
 	}
 
 	/**
-	 * Get analytics stats
+	 * Gets the daily data for the WP Dashboard analytics stats widget.
+	 * This data is used and cached by Hustle_Wp_Dashboard_Page::get_wp_dashboard_widget_data().
+	 * Make sure to handle the cache properly if using this method somewhere else.
 	 *
-	 * @since 4.1
+	 * @since 4.1.0
 	 *
-	 * @global object $wpdb
-	 * @param int $days_ago
+	 * @param int $days_ago Retrieve the data from how many days ago.
 	 * @return array
 	 */
-	public static function analytics_stats( $days_ago ) {
-		$transient_key = 'hustle_analytics_stats_' . current_time( 'Y-m-d' ) . '_' . $days_ago;
-		$cached        = get_transient( $transient_key );
-		if ( false !== $cached ) {
-			return $cached;
-		}
-
+	public function get_wp_dash_daily_stats_data( $days_ago ) {
 		global $wpdb;
-		$tracking_table = Hustle_Db::tracking_table();
-		$ranges         = array_keys( Opt_In_Utils::get_analytic_ranges() );
-		$days_ago       = in_array( $days_ago, $ranges, true ) ? $days_ago : 7;
-		$today          = new DateTime( current_time( 'Y-m-d' ) );
-		$end_date       = date( 'Y-m-d H:i:s', $today->format( 'U' ) - 1 );
-		$start_date     = date( 'Y-m-d H:i:s', $today->format( 'U' ) - $days_ago * DAY_IN_SECONDS );
-		$mysql_format   = '%Y-%m-%d %H:%i:%s';
 
-		$result = $wpdb->get_results(
-			$wpdb->prepare(
-				'SELECT module_type, action, date_created, counter '
-				. "FROM {$tracking_table} " // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-				. 'WHERE date_created BETWEEN STR_TO_DATE( %s, %s ) AND STR_TO_DATE( %s, %s)',
-				$start_date,
-				$mysql_format,
-				$end_date,
-				$mysql_format
-			),
-			ARRAY_A
+		$tracking_table = $this->table_name;
+
+		// Get the data from today to $days_ago before.
+		$query = $wpdb->prepare(
+			"SELECT module_type, action, date_created, counter
+			FROM {$wpdb->prefix}hustle_tracking
+			WHERE date_created > subdate( current_date, %d )",
+			$days_ago
 		);
 
-		$final_data = self::get_default_analytics_stats( $days_ago );
+		$result = $this->wpdb->get_results( $query, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 
-		foreach ( $result as $data ) {
-			$day = explode( ' ', $data['date_created'] )[0];
-			$final_data[ $data['module_type'] ][ $data['action'] ][ $day ] += $data['counter'];
-			$final_data['overall'][ $data['action'] ][ $day ]              += $data['counter'];
-			if ( 0 === strpos( $data['module_type'], 'embedded_' ) ) {
-				$final_data['embedded'][ $data['action'] ][ $day ] += $data['counter'];
-			}
-			if ( 0 === strpos( $data['module_type'], 'social_sharing_' ) ) {
-				$final_data['social_sharing'][ $data['action'] ][ $day ] += $data['counter'];
-			}
-		}
-		// count rates
-		foreach ( $final_data as $block => $types ) {
-			foreach ( $types as $type => $days ) {
-				if ( 'rate' !== $type ) {
-					continue;
-				}
-				foreach ( $days as $day => $val ) {
-					if ( ! empty( $final_data[ $block ]['view'][ $day ] ) && ! empty( $final_data[ $block ]['conversion'][ $day ] ) ) {
-						$final_data[ $block ]['rate'][ $day ] = round( 100 * $final_data[ $block ]['conversion'][ $day ] / $final_data[ $block ]['view'][ $day ], 2 );
-					}
-				}
-			}
-		}
-
-		// cache for later.
-		set_transient( $transient_key, $final_data, DAY_IN_SECONDS );
-
-		return $final_data;
+		return $result;
 	}
 
 	/**
-	 * Get default analitics stats with zero values
+	 * Gets the total count per tracking action per modules type for the WP Dashboard analytics stats widget.
+	 * This data is used and cached by Hustle_Wp_Dashboard_Page::get_wp_dashboard_widget_data().
+	 * Make sure to handle the cache properly if using this method somewhere else.
 	 *
-	 * @since 4.1
-	 *
-	 * @param int $days_ago
+	 * @since 4.2.1
+	 * @param integer $days_ago Amount of the last days to check.
 	 * @return array
 	 */
-	public static function get_default_analytics_stats( $days_ago ) {
-		$days = array();
-		for ( $i = 1; $i <= $days_ago; $i++ ) {
-			$days[] = date( 'Y-m-d', current_time( 'U' ) - $i * DAY_IN_SECONDS );
-		}
-		$all_blocks = array(
-			'overall',
-			'popup',
-			'slidein',
-			'embedded',
-			'embedded_inline',
-			'embedded_widget',
-			'embedded_shortcode',
-			'social_sharing',
-			'social_sharing_floating',
-			'social_sharing_inline',
-			'social_sharing_widget',
-			'social_sharing_shortcode',
+	public function get_per_module_type_totals_prev_range( $days_ago ) {
+
+		$sql = $this->wpdb->prepare(
+			// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			"SELECT module_type, action, SUM(counter) AS tracked_count
+			FROM {$this->table_name}
+			WHERE date_created > subdate( current_date, %d )
+			AND date_created < subdate( current_date, %d )
+			GROUP BY module_type, action",
+			$days_ago * 2,
+			$days_ago
+			// phpcs:enable
 		);
 
-		$all_types  = array(
-			'view',
-			'conversion',
-			'cta_conversion',
-			'optin_conversion',
-			'rate',
-		);
-		$final_data = array();
-		foreach ( $all_blocks as $block ) {
-			foreach ( $all_types as $type ) {
-				foreach ( $days as $day ) {
-					$final_data[ $block ][ $type ][ $day ] = 0;
-				}
-			}
-		}
+		$result = $this->wpdb->get_results( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 
-		return $final_data;
+		return $result;
 	}
-
 }

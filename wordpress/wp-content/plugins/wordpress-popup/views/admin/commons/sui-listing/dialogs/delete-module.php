@@ -28,7 +28,7 @@
 
 			<div class="sui-box-header sui-content-center sui-flatten sui-spacing-top--60">
 
-				<button class="sui-button-icon sui-button-float--right" data-modal-close>
+				<button class="sui-button-icon sui-button-float--right hustle-modal-close" data-modal-close>
 					<i class="sui-icon-close sui-md" aria-hidden="true"></i>
 					<span class="sui-screen-reader-text"><?php esc_html_e( 'Close this dialog window', 'hustle' ); ?></span>
 				</button>

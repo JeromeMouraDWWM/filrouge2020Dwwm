@@ -67,10 +67,10 @@ class Hustle_Layout_Helper {
 	 * @return object
 	 */
 	public function get_referer() {
-		if ( ! $this->referer ) {
+		if ( ! $this->admin ) {
 			return false;
 		}
-		return $this->referer;
+		return $this->admin;
 	}
 
 	/**

@@ -36,6 +36,7 @@ $modules_ids        = array();
 				array(
 					array(
 						'type'  => 'inline_notice',
+						'icon'  => 'info',
 						'value' => esc_html__( "You haven't created any module yet.", 'hustle' ),
 					),
 				)
@@ -216,7 +217,7 @@ $modules_ids        = array();
 					array(
 						array(
 							'type'  => 'inline_notice',
-							'class' => 'sui-notice-info',
+							'icon'  => 'info',
 							'value' => esc_html__( "You don't have any module corresponding to these filter parameters.", 'hustle' ),
 						),
 					)

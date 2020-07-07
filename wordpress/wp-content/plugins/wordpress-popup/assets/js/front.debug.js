@@ -477,22 +477,7 @@ Optin.Models = {};
 			this.expirationDays = this.getExpirationDays();
 			this.appearAfter = this.settings.triggers.trigger;
 
-			this.triggers = {
-
-				onTimeDelay: this.settings.triggers.on_time_delay,
-				onTimeUnit: this.settings.triggers.on_time_unit,
-				onScroll: this.settings.triggers.on_scroll,
-				onScrollPagePercent: parseInt( this.settings.triggers.on_scroll_page_percent ),
-				onScrollCssSelector: this.settings.triggers.on_scroll_css_selector,
-				enableOnClickElement: this.settings.triggers.enable_on_click_element,
-				onClickElement: this.settings.triggers.on_click_element,
-				enableOnClickShortcode: this.settings.triggers.enable_on_click_shortcode,
-				onExitIntentperSession: this.settings.triggers.on_exit_intent_per_session,
-				onExitIntentDelayed: this.settings.triggers.on_exit_intent_delayed,
-				onExitIntentDelayedTime: this.settings.triggers.on_exit_intent_delayed_time,
-				onExitIntentDelayedUnit: this.settings.triggers.on_exit_intent_delayed_unit,
-				onAdblock: this.settings.triggers.on_adblock
-			};
+			this.triggers = this.settings.triggers;
 
 			if ( 'popup' === this.moduleType ) {
 				this.cookieKey = Optin.POPUP_COOKIE_PREFIX + this.moduleId;
@@ -681,10 +666,10 @@ Optin.Models = {};
 
 		timeTrigger: function() {
 
-			let delay = parseInt( this.triggers.onTimeDelay, 10 ) * 1000;
-			if ( 'minutes' === this.triggers.onTimeUnit ) {
+			let delay = parseInt( this.triggers.on_time_delay, 10 ) * 1000;
+			if ( 'minutes' === this.triggers.on_time_unit ) {
 				delay *= 60;
-			} else if ( 'hours' === this.triggers.onTimeUnit ) {
+			} else if ( 'hours' === this.triggers.on_time_unit ) {
 				delay *= ( 60 * 60 );
 			}
 
@@ -697,7 +682,7 @@ Optin.Models = {};
 			let me = this,
 				selector = '';
 
-			if ( '1' === this.triggers.enableOnClickElement && '' !== ( selector = $.trim( this.triggers.onClickElement ) )  ) {
+			if ( '1' === this.triggers.enable_on_click_element && '' !== ( selector = $.trim( this.triggers.on_click_element ) )  ) {
 				const $clickable = $( selector );
 
 				if ( $clickable.length ) {
@@ -708,7 +693,7 @@ Optin.Models = {};
 				}
 			}
 
-			if ( '1' === this.triggers.enableOnClickShortcode ) {
+			if ( '1' === this.triggers.enable_on_click_shortcode ) {
 
 				// Clickable button added with shortcode
 				$( document ).on( 'click', '.hustle_module_shortcode_trigger', function( e ) {
@@ -725,20 +710,20 @@ Optin.Models = {};
 
 			var me = this,
 				moduleShown = false;
-			if ( 'scrolled' === this.triggers.onScroll ) {
+			if ( 'scrolled' === this.triggers.on_scroll ) {
 				$( win ).scroll( _.debounce( function() {
 					if ( moduleShown ) {
 						return;
 					}
-					if ( (  win.pageYOffset * 100 / $( doc ).height() ) >= parseFloat( me.triggers.onScrollPagePercent ) ) {
+					if ( (  win.pageYOffset * 100 / $( doc ).height() ) >= parseInt( me.triggers.on_scroll_page_percent ) ) {
 						me.display();
 					moduleShown = true;
 					}
 				}, 50 ) );
 			}
 
-			if ( 'selector' === this.triggers.onScroll ) {
-				let $el = $( this.triggers.onScrollCssSelector );
+			if ( 'selector' === this.triggers.on_scroll ) {
+				let $el = $( this.triggers.on_scroll_css_selector );
 				if ( $el.length ) {
 					$( win ).scroll( _.debounce( function() {
 						if ( moduleShown ) {
@@ -759,19 +744,19 @@ Optin.Models = {};
 			;
 
 			// handle delay
-			if ( '1' === this.triggers.onExitIntentDelayed ) {
+			if ( '1' === this.triggers.on_exit_intent_delayed ) {
 
-				delay = parseInt( this.triggers.onExitIntentDelayedTime, 10 ) * 1000;
+				delay = parseInt( this.triggers.on_exit_intent_delayed_time, 10 ) * 1000;
 
-				if (  'minutes' === this.triggers.onExitIntentDelayedTime ) {
+				if (  'minutes' === this.triggers.on_exit_intent_delayed_unit ) {
 					delay *= 60;
-				} else if ( 'hours' === this.triggers.onExitIntentDelayedTime ) {
+				} else if ( 'hours' === this.triggers.on_exit_intent_delayed_unit ) {
 					delay *= ( 60 * 60 );
 				}
 			}
 
 			// handle per session
-			if ( '1' === this.triggers.onExitIntentperSession ) {
+			if ( '1' === this.triggers.on_exit_intent_per_session ) {
 				$( doc ).on( 'mouseleave', _.debounce( function( e ) {
 					if ( ! $( 'input' ).is( ':focus' ) ) {
 						me.setExitTimer();
@@ -822,8 +807,17 @@ Optin.Models = {};
 
 		adblockTrigger: function() {
 			var adblock = ! $( '#hustle_optin_adBlock_detector' ).length;
-			if ( adblock && '1' === this.triggers.onAdblock ) {
-				this.display();
+			if ( adblock && '1' === this.triggers.on_adblock ) {
+
+				if ( '1' !== this.triggers.enable_on_adblock_delay ) {
+					this.display();
+				} else {
+					const value = this.triggers.on_adblock_delay,
+						unit = this.triggers.on_adblock_delay_unit,
+						delay = this.convertToMicroseconds( value, unit );
+
+					setTimeout( () => this.display(), delay );
+				}
 			}
 		},
 
@@ -1481,17 +1475,21 @@ Optin.Models = {};
 
 			const network = $icon.data( 'network' );
 			if ( network && 'undefined' !== typeof incOpt.native_share_enpoints[ network ]) {
-				window.open(
-					incOpt.native_share_enpoints[ network ],
-					'MsgWindow',
-					'menubar=no,toolbar=no,resizable=yes,scrollbars=yes'
-				);
+				if ( 'pinterest' === network ) {
+					this.updateSocialCounter( $icon, 'click' );
+					PinUtils.pinAny();
+				} else {
+					window.open(
+						incOpt.native_share_enpoints[ network ],
+						'MsgWindow',
+						'menubar=no,toolbar=no,resizable=yes,scrollbars=yes'
+					);
+				}
 			}
 
 		},
 
 		updateSocialCounter( $button, counterType ) {
-
 			const network = $button.data( 'network' ),
 				containerClass = '.hustle_module_id_' + this.$el.data( 'id' );
 

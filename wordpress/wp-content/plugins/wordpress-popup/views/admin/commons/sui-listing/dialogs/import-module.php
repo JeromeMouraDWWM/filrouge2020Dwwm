@@ -45,11 +45,17 @@ if ( ! $is_ssharing ) {
 }
 
 ob_start();
-?>
 
-<div role="alert" class="sui-notice sui-notice-error" style="display:none;" hidden>
-	<p></p>
-</div>
+$notice_options = array(
+	array(
+		'type'  => 'inline_notice',
+		'id'    => 'hustle-dialog--import-error-notice',
+		'value' => '',
+	),
+);
+
+$this->get_html_for_options( $notice_options );
+?>
 
 <div class="sui-form-field">
 
@@ -193,7 +199,6 @@ if ( ! $is_ssharing ) :
 					aria-controls="hustle-import-options--info-content"
 					aria-selected="false"
 					data-label-for="hustle-import-options--info"
-					tabindex="-1"
 				>
 					<?php esc_html_e( 'Informational', 'hustle' ); ?>
 				</button>

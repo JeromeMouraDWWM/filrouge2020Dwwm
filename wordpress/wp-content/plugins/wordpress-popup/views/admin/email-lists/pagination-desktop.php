@@ -140,7 +140,9 @@ if ( isset( $actions_class ) ) {
 								name="date_range"
 								value="<?php echo esc_attr( $date_range ); ?>"
 								placeholder="<?php esc_html_e( 'Pick a date range', 'hustle' ); ?>"
-								class="hustle-entries-filter-date sui-form-control" />
+								class="hustle-entries-filter-date sui-form-control"
+								autocomplete="off"
+								/>
 						</div>
 					</div>
 

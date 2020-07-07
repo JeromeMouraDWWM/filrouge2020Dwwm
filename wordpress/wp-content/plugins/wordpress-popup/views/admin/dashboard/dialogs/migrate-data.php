@@ -30,7 +30,7 @@ if ( Opt_In_Utils::_is_free() ) {
 		id="hustle-dialog--migrate"
 		class="sui-modal-content"
 		aria-modal="true"
-		aria-label="<?php esc_html_e( 'Nice work on updating the Hustle! All your modules are already in place. However, you need to migrate the data of your existing modules such as tracking data and email list manually', 'hustle' ); ?>"
+		aria-label="<?php esc_html_e( 'Modal for migrating your existing tracking data to the latest Hustle version.', 'hustle' ); ?>"
 		aria-live="polite"
 		data-nonce="<?php echo esc_attr( wp_create_nonce( 'hustle_dismiss_notification' ) ); ?>"
 		data-is-first="<?php echo $is_first_time_opening ? '1' : '0'; ?>"
@@ -89,6 +89,7 @@ if ( Opt_In_Utils::_is_free() ) {
 					</figure>
 
 					<h3
+						id="hustle-dialog--migrate-slide-2-title"
 						class="sui-box-title sui-lg"
 						data-done-text="<?php esc_html_e( 'Migration complete', 'hustle' ); ?>"
 					>
@@ -96,6 +97,7 @@ if ( Opt_In_Utils::_is_free() ) {
 					</h3>
 
 					<p
+						id="hustle-dialog--migrate-slide-2-description"
 						class="sui-description"
 						style="margin-bottom: 0;"
 						data-default-text="<?php esc_html_e( 'Nice work on updating the Hustle! All your modules are already in place. However, you need to migrate the data of your existing modules such as tracking data and email list manually.', 'hustle' ); ?>"
@@ -155,10 +157,20 @@ if ( Opt_In_Utils::_is_free() ) {
 
 				<div class="sui-box-body sui-content-center" style="display:none;" aria-hidden="true" hidden data-migrate-failed>
 
-					<div class="sui-notice sui-notice-error">
-						<?php /* translators: 1. opening 'a' tag to support link, 2. closing 'a' tag */ ?>
-						<p><?php printf( esc_html__( 'There was an error while migrating your data. Please retry again or contact our %1$ssupport%2$s team for help.', 'hustle' ), '<a href="' . esc_url( $support_link ) . '" target="_blank">', '</a>' ); ?></p>
-					</div>
+					<?php
+					$notice_options = array(
+						array(
+							'type'       => 'inline_notice',
+							'id'         => 'hustle-dialog--migrate-error-notice',
+							'value'      => '',
+							'attributes' => array(
+								/* translators: 1. opening 'a' tag to support link, 2. closing 'a' tag */
+								'data-message' => sprintf( esc_html__( 'There was an error while migrating your data. Please retry again or contact our %1$ssupport%2$s team for help.', 'hustle' ), '<a href="' . esc_url( $support_link ) . '" target="_blank">', '</a>' ),
+							),
+						),
+					);
+					$this->get_html_for_options( $notice_options );
+					?>
 
 					<button
 						id="hustle-migrate-start"

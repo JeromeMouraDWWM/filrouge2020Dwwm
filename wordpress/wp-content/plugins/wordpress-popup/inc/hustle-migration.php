@@ -63,8 +63,6 @@ class Hustle_Migration {
 
 		$this->is_multisite = is_multisite();
 
-		add_action( 'upgrader_process_complete', array( $this, 'upgrader_process_complete' ), 10, 2 );
-
 		add_action( 'wp_ajax_hustle_migrate_tracking', array( $this, 'migrate_tracking_and_subscriptions' ) );
 
 		if ( $this->is_migration() ) {
@@ -72,32 +70,6 @@ class Hustle_Migration {
 		}
 
 		$this->migration_410 = new Hustle_410_Migration();
-	}
-
-	/**
-	 * Flags the previous version on upgrade so we can handle notices and modals.
-	 * This action runs in the old version of the plugin, not the new one.
-	 *
-	 * @since 4.2.0
-	 *
-	 * @param WP_Upgrader $upgrader_object Instance of the WP_Upgrader class.
-	 * @param array       $data Upgrade data.
-	 */
-	public function upgrader_process_complete( $upgrader_object, $data ) {
-
-		if ( 'update' === $data['action'] && 'plugin' === $data['type'] ) {
-
-			foreach ( $data['plugins'] as $plugin ) {
-
-				// Make sure our plugin is among the ones being updated.
-				if ( Opt_In::$plugin_base_file === $plugin ) {
-					update_site_option( 'hustle_previous_version', Opt_In::VERSION );
-
-					// Make the highlights modal undismissed so it's shown in the next version.
-					Hustle_Notifications::add_dismissed_notification( Hustle_Dashboard_Admin::HIGHLIGHT_MODAL_NAME );
-				}
-			}
-		}
 	}
 
 	/**

@@ -152,10 +152,11 @@ if ( ! class_exists( 'Hustle_E_Newsletter' ) ) :
 				$active = ! empty( $submitted_data['active'] );
 				// If not active, activate it.
 				if ( ! Hustle_Provider_Utils::is_provider_active( $this->_slug ) ) {
-					// TODO: Wrap this in a friendlier method
+
+					// TODO: Wrap this in a friendlier method.
 					$activated = Hustle_Providers::get_instance()->activate_addon( $this->_slug );
 					if ( ! $activated ) {
-						$error_message = $this->provider_connection_falied();
+						$error_message = esc_html( $this->provider_connection_falied() );
 						$has_errors    = true;
 					} else {
 						$this->save_settings_values( array( 'active' => $active ) );
@@ -185,11 +186,11 @@ if ( ! class_exists( 'Hustle_E_Newsletter' ) ) :
 			}
 
 			if ( ! $this->is_plugin_active() ) {
-				$has_errors       = true;
-				$e_newsletter_url = 'https://github.com/wpmudev/e-newsletter';
-				$error_message    = sprintf(
-					__( 'Please activate e-Newsletter plugin to use this integration. If you don\'t have it installed, %1$sdownload it here%2$s.', 'hustle' ),
-					'<a href="' . esc_url( $e_newsletter_url ) . '" target="_blank">',
+				$has_errors    = true;
+				$error_message = sprintf(
+					/* translators: 1. opening 'a' tag to the e-Newsletter github repo, 2. closing 'a' tag */
+					esc_html__( 'Please activate e-Newsletter plugin to use this integration. If you don\'t have it installed, %1$sdownload it here%2$s.', 'hustle' ),
+					'<a href="https://github.com/wpmudev/e-newsletter" target="_blank">',
 					'</a>'
 				);
 			}
@@ -208,9 +209,13 @@ if ( ! class_exists( 'Hustle_E_Newsletter' ) ) :
 					__( 'Install e-Newsletter', 'hustle' )
 				);
 
-				$step_html     .= '<span class="sui-notice sui-notice-error hustle-installation-error" style="margin: 0;">';
-					$step_html .= '<p>' . $error_message . '</p>';
-				$step_html     .= '</span>';
+				$error_notice = array(
+					'type'  => 'notice',
+					'icon'  => 'info',
+					'class' => 'sui-notice-error',
+					'value' => $error_message,
+				);
+				array_unshift( $options, $error_notice );
 
 			} else {
 

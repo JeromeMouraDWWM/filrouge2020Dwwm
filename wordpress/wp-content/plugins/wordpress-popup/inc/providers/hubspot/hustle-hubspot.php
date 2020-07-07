@@ -208,7 +208,9 @@ if ( ! class_exists( 'Hustle_HubSpot' ) ) :
 					array(
 						array(
 							'type'  => 'notice',
-							'value' => sprintf( __( 'You are connected to %s', 'hustle' ), $account ),
+							'icon'  => 'info',
+							/* translators: account the provider is connected to */
+							'value' => sprintf( esc_html__( 'You are connected to %s', 'hustle' ), esc_html( $account ) ),
 							'class' => 'sui-notice-success',
 						),
 					)
