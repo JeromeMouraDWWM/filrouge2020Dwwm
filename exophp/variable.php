@@ -10,4 +10,6 @@
 	
 	$prix_table = 150;
 	$prix_armoire = 350;
+
+	$test = (string) 42;
 ?>

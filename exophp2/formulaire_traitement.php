@@ -5,6 +5,7 @@ $prenom = $_POST['prenom'];
 $email = $_POST['email'];
 $age = $_POST['age'];
 $sexe = $_POST['sexe'];
+$pwd = $_POST['pwd'];
 
 ?>
 
@@ -27,6 +28,7 @@ $sexe = $_POST['sexe'];
 				Votre nom : ' .$nom. '
 				<br> Votre prénom : ' .$prenom. '
 				<br> Votre email : ' .$email. '
+				<br> Votre mot de passe : ' .$pwd. '
 				<br> Votre age : ' .$age. '
 				<br> Votre sexe : ' .$sexe;
 			?>

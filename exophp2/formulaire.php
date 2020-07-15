@@ -26,9 +26,13 @@
     			<input type="email" class="form-control" id="email" name="email" placeholder="nom@email.com" required>
     			<small class="form-text text-muted">Votre adresse mail ne sera partagé avec personne</small>
  			</div>
+ 			<div>
+ 				<label for="pwd">Mot de Passe :</label><br>
+  				<input type="password" class="form-control" id="pwd" name="pwd" required>
+  			</div>
  			<div class="form-group">
  			 	<label for="age">Age</label>
- 			 	<input type="number" class="form-control" id="age" name="age" placeholder="25" required>
+ 			 	<input type="number" class="form-control" id="age" name="age" placeholder="25" required max="100">
  			</div>
  			<div class="form-check">
   				<input class="form-check-input" type="radio" name="sexe" id="homme" value="homme" required>
@@ -43,7 +47,8 @@
   				<label class="form-check-label" for="malade">Malade Mentale</label>
 			</div>
 			<br>
-  			<button type="submit" class="btn btn-primary">Submit</button>
+			<button type="reset" class="btn btn-primary">Réessayer</button>
+  			<button type="submit" class="btn btn-primary">Envoyez</button>
 		</form>
 
 	</body>
