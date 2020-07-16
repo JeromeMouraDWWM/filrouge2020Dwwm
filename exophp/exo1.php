@@ -1,6 +1,6 @@
 <?php 	include_once"header.php";
 		include_once"variable.php";
-error_reporting(E_ALL & ~E_NOTICE);
+//error_reporting(E_ALL & ~E_NOTICE);
 ?>
 
 <h1>Exercice 1</h1>

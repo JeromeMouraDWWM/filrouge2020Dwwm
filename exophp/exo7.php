@@ -74,7 +74,8 @@ echo '</div><br>
 <form action="exo1.php" method="post" accept-charset="utf-8">
 	<div class="form-group">
  		<label for="ville">Ville</label>
- 		<input type="search" class="form-control" id="ville" name="ville" required>
+		<input type="text" class="form-control" id="ville" name="ville" onkeyup="showResult(this.value)" required>
+		<div id="livesearch"></div>
  	</div>
  	<button type="submit" class="btn btn-primary">Envoyez</button>
 </form>';
