@@ -1,0 +1,370 @@
+# Translation of Plugins - Hustle Marketing, Social Share, Email Opt-in Form, and Popup Plugin - Stable (latest release) in French (France)
+# This file is distributed under the same license as the Plugins - Hustle Marketing, Social Share, Email Opt-in Form, and Popup Plugin - Stable (latest release) package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2020-05-26 12:21:10+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: GlotPress/3.0.0-alpha\n"
+"Language: fr\n"
+"Project-Id-Version: Plugins - Hustle Marketing, Social Share, Email Opt-in Form, and Popup Plugin - Stable (latest release)\n"
+
+#: views/admin/commons/sui-listing/elements/actions.php:52
+#: views/admin/commons/sui-wizard/navigation.php:62
+#: views/admin/commons/sui-wizard/navigation.php:96
+#: views/admin/dialogs/preview-dialog.php:15
+msgid "Preview"
+msgstr "Aperçu"
+
+#: views/admin/popup/wizard.php:94 views/admin/slidein/wizard.php:94
+#: views/admin/commons/sui-wizard/templates/tab-behaviour.php:16
+#: views/admin/commons/sui-wizard/templates/tab-visibility.php:72
+#: views/admin/commons/sui-wizard/tab-behaviour/closing-behaviour.php:74
+#: views/admin/embedded/wizard.php:103 inc/hustle-model.php:991
+msgid "Behavior"
+msgstr "Comportement"
+
+#: views/admin/settings/tab-analytics.php:90
+#: inc/providers/zapier/hustle-zapier.php:218
+#: inc/providers/e_newsletter/hustle-e-newsletter.php:251
+msgid "Activate"
+msgstr "Activer"
+
+#: views/admin/settings/tab-analytics.php:108
+msgid "Deactivate"
+msgstr "Désactiver"
+
+#: lib/free-dashboard/module.php:406 lib/free-dashboard/module.php:446
+msgid "No thanks"
+msgstr "Non merci"
+
+#: lib/free-dashboard/module.php:402 lib/free-dashboard/module.php:438
+msgid "Thanks :)"
+msgstr "Merci :)"
+
+#: lib/free-dashboard/module.php:441
+msgid "Rate %s"
+msgstr "Évaluez %s"
+
+#: lib/wpmu-lib/inc/class-thelib-ui.php:535
+msgid "Dismiss this notice."
+msgstr "Ignorer ce message."
+
+#: lib/free-dashboard/module.php:386
+msgid "We're happy that you've chosen to install %s! Are you interested in how to make the most of this plugin? How would you like a quick 5 day email crash course with actionable advice on building your membership site? Only the info you want, no subscription!"
+msgstr "Nous sommes heureux que vous ayez choisi d’installer %s&nbsp;! Êtes-vous intéressé par savoir comment utiliser cette extension&nbsp;? Souhaiteriez-vous une formation accélérée de 5 jours par email avec des conseils pour construire un site avec espace membres&nbsp;? Seulement si vous le voulez, sans abonnement&nbsp;!"
+
+#: views/admin/settings/dialogs/palettes-edit-palette.php:19
+#: views/admin/settings/permissions/edit-modules.php:175
+#: views/admin/dashboard/templates/widget-modules.php:35
+#: views/admin/commons/sui-wizard/dialogs/edit-field.php:99
+#: views/admin/commons/sui-wizard/dialogs/edit-field.php:730
+#: views/admin/commons/sui-wizard/dialogs/edit-field.php:851
+#: views/admin/commons/sui-wizard/dialogs/edit-field.php:986
+#: views/admin/commons/sui-wizard/dialogs/optin-fields.php:12
+#: inc/class-hustle-module-page-abstract.php:847
+#: inc/providers/gutenberg/blocks/block-popup-trigger.php:91
+#: inc/providers/gutenberg/blocks/block-embeds.php:115
+#: inc/providers/gutenberg/blocks/block-slidein-trigger.php:91
+#: inc/providers/gutenberg/blocks/block-social-share.php:101
+msgid "Name"
+msgstr "Nom"
+
+#: inc/providers/sendy/hustle-sendy.php:315
+#: inc/providers/local-list/hustle-local-list-form-settings.php:104
+#: inc/providers/infusionsoft/hustle-infusion-soft-form-settings.php:99
+#: inc/providers/infusionsoft/hustle-infusion-soft.php:309
+#: inc/providers/campaignmonitor/hustle-campaignmonitor-form-settings.php:92
+#: inc/providers/campaignmonitor/hustle-campaignmonitor.php:330
+#: inc/providers/mailerlite/hustle-mailerlite-form-settings.php:105
+#: inc/providers/mailerlite/hustle-mailerlite.php:241
+#: inc/providers/mailchimp/hustle-mailchimp.php:357
+#: inc/providers/mailchimp/hustle-mailchimp-form-settings.php:390
+#: inc/providers/aweber/hustle-aweber-form-settings.php:102
+#: inc/providers/aweber/hustle-aweber.php:478
+#: inc/providers/constantcontact/hustle-constantcontact-form-settings.php:117
+#: inc/providers/madmimi/hustle-mad-mimi.php:292
+#: inc/providers/madmimi/hustle-mad-mimi-form-settings.php:107
+#: inc/providers/hubspot/hustle-hubspot-form-settings.php:107
+#: inc/providers/zapier/hustle-zapier.php:208
+#: inc/providers/zapier/hustle-zapier-form-settings.php:91
+#: inc/providers/e_newsletter/hustle-e-newsletter.php:241
+#: inc/providers/e_newsletter/hustle-e-newsletter-form-settings.php:98
+#: inc/providers/convertkit/hustle-convertkit-form-settings.php:94
+#: inc/providers/convertkit/hustle-convertkit.php:281
+#: inc/providers/sendinblue/hustle-sendinblue-form-settings.php:102
+#: inc/providers/sendinblue/hustle-sendinblue.php:267
+#: inc/providers/sendgrid/hustle-sendgrid.php:271
+#: inc/providers/sendgrid/hustle-sendgrid-form-settings.php:102
+#: inc/providers/getresponse/hustle-get-response-form-settings.php:102
+#: inc/providers/getresponse/hustle-get-response.php:268
+#: inc/providers/icontact/hustle-icontact.php:326
+#: inc/providers/icontact/hustle-icontact-form-settings.php:294
+#: inc/providers/activecampaign/hustle-activecampaign.php:307
+#: inc/providers/activecampaign/hustle-activecampaign-form-settings.php:247
+#: inc/providers/mautic/hustle-mautic.php:327
+#: inc/providers/mautic/hustle-mautic-form-settings.php:102
+msgid "Save"
+msgstr "Enregistrer"
+
+#: lib/free-dashboard/module.php:405 lib/free-dashboard/module.php:445
+msgid "Saving"
+msgstr "Enregistrement en cours"
+
+#: views/admin/settings/unsubscribe/shortcode.php:13
+#: views/admin/commons/sui-wizard/tab-display-options/display-options.php:164
+#: views/admin/commons/sui-wizard/tab-visibility/conditions.php:137
+#: views/admin/sshare/display-options/tpl--shortcode.php:14
+#: views/admin/widget-analytics.php:58 inc/hustle-sshare-model.php:32
+#: inc/hustle-module-model.php:35
+msgid "Shortcode"
+msgstr "Code court"
+
+#: views/admin/settings.php:59
+#: views/admin/commons/sui-wizard/dialogs/edit-field.php:17
+#: inc/hustle-module-admin.php:470 inc/hustle-settings-page.php:20
+msgid "Settings"
+msgstr "Réglages"
+
+#: views/admin/commons/sui-wizard/elements/palette-informational.php:134
+#: views/admin/commons/sui-wizard/elements/palette-informational.php:203
+#: views/admin/commons/sui-wizard/elements/palette-optin.php:86
+#: views/admin/commons/sui-wizard/elements/palette-optin.php:144
+#: views/admin/commons/sui-wizard/elements/palette-optin.php:593
+#: views/admin/commons/sui-wizard/elements/palette-optin.php:661
+#: views/admin/commons/sui-wizard/elements/palette-optin.php:801
+msgid "Active"
+msgstr "Actif"
+
+#: views/admin/commons/sui-listing/elements/actions.php:35
+#: views/admin/commons/sui-listing/elements/module.php:152
+#: views/admin/commons/sui-listing/elements/module.php:160
+msgid "Edit"
+msgstr "Modifier"
+
+#: views/admin/commons/sui-listing/dialogs/import-module.php:173
+#: views/admin/commons/sui-wizard/elements/palette-informational.php:29
+#: views/admin/commons/sui-wizard/elements/palette-informational.php:92
+#: views/admin/commons/sui-wizard/elements/palette-informational.php:166
+#: views/admin/commons/sui-wizard/elements/palette-optin.php:34
+#: views/admin/commons/sui-wizard/elements/palette-optin.php:102
+#: views/admin/commons/sui-wizard/elements/palette-optin.php:170
+#: views/admin/commons/sui-wizard/elements/palette-optin.php:269
+#: views/admin/commons/sui-wizard/elements/palette-optin.php:316
+#: views/admin/commons/sui-wizard/elements/palette-optin.php:384
+#: views/admin/commons/sui-wizard/elements/palette-optin.php:483
+#: views/admin/commons/sui-wizard/elements/palette-optin.php:536
+#: views/admin/commons/sui-wizard/elements/palette-optin.php:619
+#: views/admin/commons/sui-wizard/elements/palette-optin.php:749
+#: views/admin/commons/sui-wizard/tab-appearance/layout.php:50
+#: views/admin/commons/sui-wizard/tab-appearance/layout.php:124
+#: views/admin/sshare/appearance/tpl--icons-style.php:37
+msgid "Default"
+msgstr "Valeur par défaut"
+
+#: views/admin/popup/wizard.php:71 views/admin/slidein/wizard.php:71
+#: views/admin/commons/sui-wizard/tab-display-options/display-options.php:134
+#: views/admin/commons/sui-wizard/templates/tab-content.php:70
+#: views/admin/commons/sui-wizard/templates/tab-appearance.php:16
+#: views/admin/commons/sui-wizard/templates/tab-integrations.php:166
+#: views/admin/commons/sui-wizard/templates/tab-display.php:38
+#: views/admin/commons/sui-wizard/templates/tab-visibility.php:64
+#: views/admin/sshare/wizard.php:54
+#: views/admin/sshare/appearance/template.php:42
+#: views/admin/sshare/display-options/template.php:60
+#: views/admin/embedded/wizard.php:71 inc/hustle-model.php:966
+msgid "Appearance"
+msgstr "Apparence"
+
+#. Author of the plugin
+msgid "WPMU DEV"
+msgstr "WPMU DEV"
+
+#: views/admin/commons/sui-wizard/tab-emails/automated-email.php:106
+#: views/admin/commons/sui-wizard/tab-emails/automated-email.php:190
+msgid "days"
+msgstr "jours"
+
+#: views/admin/commons/sui-listing/elements/bulk-actions.php:29
+#: views/admin/commons/sui-listing/elements/actions.php:125
+#: views/admin/commons/sui-wizard/elements/form-field.php:42
+msgid "Duplicate"
+msgstr "Dupliquer"
+
+#: views/admin/commons/sui-wizard/tab-behaviour/animation-settings.php:157
+msgid "Zoom In Left"
+msgstr "Zoom avant par la gauche"
+
+#: views/admin/commons/sui-wizard/tab-behaviour/animation-settings.php:147
+msgid "Zoom In Right"
+msgstr "Zoom avant par la droite"
+
+#: views/admin/commons/sui-wizard/tab-behaviour/animation-settings.php:142
+msgid "Zoom In Up"
+msgstr "Zoom avant par le haut"
+
+#: views/admin/commons/sui-wizard/tab-behaviour/animation-settings.php:200
+msgid "Bounce Out"
+msgstr "Rebond sortant"
+
+#: views/admin/commons/sui-wizard/tab-behaviour/animation-settings.php:215
+msgid "Bounce Out Down"
+msgstr "Rebond sortant vers le bas"
+
+#: views/admin/commons/sui-wizard/tab-behaviour/animation-settings.php:220
+msgid "Bounce Out Left"
+msgstr "Rebond sortant vers la gauche"
+
+#: views/admin/commons/sui-wizard/tab-behaviour/animation-settings.php:210
+msgid "Bounce Out Right"
+msgstr "Rebond sortant vers la droite"
+
+#: views/admin/commons/sui-wizard/tab-behaviour/animation-settings.php:205
+msgid "Bounce Out Up"
+msgstr "Rebond sortant vers le haut"
+
+#: views/admin/commons/sui-wizard/tab-behaviour/animation-settings.php:225
+msgid "Fade Out"
+msgstr "Disparition en fondu"
+
+#: views/admin/commons/sui-wizard/tab-behaviour/animation-settings.php:230
+msgid "Fade Out Up"
+msgstr "Disparition en fondu vers le bas"
+
+#: views/admin/commons/sui-wizard/tab-behaviour/animation-settings.php:137
+msgid "Zoom In"
+msgstr "Zoom avant"
+
+#: views/admin/commons/sui-wizard/tab-behaviour/animation-settings.php:152
+msgid "Zoom In Down"
+msgstr "Zoom avant par le bas"
+
+#: views/admin/commons/sui-wizard/tab-behaviour/animation-settings.php:295
+msgid "Zoom Out"
+msgstr "Zoom arrière"
+
+#: views/admin/commons/sui-wizard/tab-behaviour/animation-settings.php:315
+msgid "Zoom Out Left"
+msgstr "Zoom arrière par la gauche"
+
+#: views/admin/commons/sui-wizard/tab-behaviour/animation-settings.php:305
+msgid "Zoom Out Right"
+msgstr "Zoom arrière par la droite"
+
+#: views/admin/commons/sui-wizard/tab-behaviour/animation-settings.php:300
+msgid "Zoom Out Up"
+msgstr "Zoom arrière par le haut"
+
+#: views/admin/commons/sui-wizard/tab-behaviour/animation-settings.php:240
+msgid "Fade Out Down"
+msgstr "Disparition en fondu par le bas"
+
+#: views/admin/commons/sui-wizard/tab-behaviour/animation-settings.php:245
+msgid "Fade Out Left"
+msgstr "Disparition en fondu par la gauche"
+
+#: views/admin/commons/sui-wizard/tab-behaviour/animation-settings.php:235
+msgid "Fade Out Right"
+msgstr "Disparition en fondu par la droite"
+
+#: views/admin/commons/sui-wizard/tab-behaviour/animation-settings.php:325
+msgid "Light Speed Out"
+msgstr "Animation « Lightspeed » arrière"
+
+#: views/admin/commons/sui-wizard/tab-behaviour/animation-settings.php:162
+msgid "Roll In"
+msgstr "Roulement avant"
+
+#: views/admin/commons/sui-wizard/tab-behaviour/animation-settings.php:320
+msgid "Roll Out"
+msgstr "Roulement arrière"
+
+#: views/admin/commons/sui-wizard/tab-behaviour/animation-settings.php:97
+msgid "Rotate In Down Left"
+msgstr "Rotation avant par le bas gauche"
+
+#: views/admin/commons/sui-wizard/tab-behaviour/animation-settings.php:102
+msgid "Rotate In Down Right"
+msgstr "Rotation avant par le bas droite"
+
+#: views/admin/commons/sui-wizard/tab-behaviour/animation-settings.php:107
+msgid "Rotate In Up Left"
+msgstr "Rotation avant par le haut gauche"
+
+#: views/admin/commons/sui-wizard/tab-behaviour/animation-settings.php:112
+msgid "Rotate In Up Right"
+msgstr "Rotation avant par le haut droite"
+
+#: views/admin/commons/sui-wizard/tab-behaviour/animation-settings.php:250
+msgid "Rotate Out"
+msgstr "Rotation arrière"
+
+#: views/admin/commons/sui-wizard/tab-behaviour/animation-settings.php:265
+msgid "Rotate Out Down Left"
+msgstr "Rotation arrière par le bas gauche"
+
+#: views/admin/commons/sui-wizard/tab-behaviour/animation-settings.php:270
+msgid "Rotate Out Down Right"
+msgstr "Rotation arrière par le bas droite"
+
+#: views/admin/commons/sui-wizard/tab-behaviour/animation-settings.php:255
+msgid "Rotate Out Up Left"
+msgstr "Rotation arrière par le haut gauche"
+
+#: views/admin/commons/sui-wizard/tab-behaviour/animation-settings.php:260
+msgid "Rotate Out Up Right"
+msgstr "Rotation arrière par le haut droite"
+
+#: views/admin/commons/sui-wizard/tab-behaviour/animation-settings.php:310
+msgid "Zoom Out Down"
+msgstr "Zoom arrière par le bas"
+
+#: views/admin/commons/sui-wizard/tab-behaviour/animation-settings.php:42
+msgid "Bounce In"
+msgstr "Rebond entrant"
+
+#: views/admin/commons/sui-wizard/tab-behaviour/animation-settings.php:57
+msgid "Bounce In Down"
+msgstr "Rebond entrant vers le bas"
+
+#: views/admin/commons/sui-wizard/tab-behaviour/animation-settings.php:62
+msgid "Bounce In Left"
+msgstr "Rebond entrant vers la gauche"
+
+#: views/admin/commons/sui-wizard/tab-behaviour/animation-settings.php:52
+msgid "Bounce In Right"
+msgstr "Rebond entrant vers la droite"
+
+#: views/admin/commons/sui-wizard/tab-behaviour/animation-settings.php:47
+msgid "Bounce In Up"
+msgstr "Rebond entrant vers le haut"
+
+#: views/admin/commons/sui-wizard/tab-behaviour/animation-settings.php:67
+msgid "Fade In"
+msgstr "Apparition en fondu"
+
+#: views/admin/commons/sui-wizard/tab-behaviour/animation-settings.php:82
+msgid "Fade In Down"
+msgstr "Apparition en fondu vers le bas"
+
+#: views/admin/commons/sui-wizard/tab-behaviour/animation-settings.php:87
+msgid "Fade In Left"
+msgstr "Apparition en fondu vers la gauche"
+
+#: views/admin/commons/sui-wizard/tab-behaviour/animation-settings.php:77
+msgid "Fade In Right"
+msgstr "Apparition en fondu vers la droite"
+
+#: views/admin/commons/sui-wizard/tab-behaviour/animation-settings.php:72
+msgid "Fade In Up"
+msgstr "Apparition en fondu par le haut"
+
+#: views/admin/commons/sui-wizard/tab-behaviour/animation-settings.php:167
+msgid "Light Speed In"
+msgstr "Animation « Lightspeed » avant"
+
+#: views/admin/commons/sui-wizard/tab-behaviour/animation-settings.php:92
+msgid "Rotate In"
+msgstr "Rotation avant"
