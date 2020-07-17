@@ -7,19 +7,25 @@ $pass = 'root';
 
 try {
     $con = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $user, $pass);
-    echo '<br><p>Connecté ! <br></p>';
 } catch (PDOException $e) {
     echo "Erreur !: " . $e->getMessage() . "<br>";
     die();
 } 
 
-$q=intval($_POST['q']);
+$q=($_GET['q']);
 
-$sql = $con->prepare("SELECT `ville_nom_reel`, `ville_code_postal` FROM `villes_france_free` WHERE `ville_nom_reel` LIKE '%$q%'");
+$sql = $con->prepare("SELECT `ville_nom_reel`, `ville_code_postal` FROM `villes_france_free` WHERE `ville_nom_reel` LIKE '$q%'");
 $sql->execute();
 $result = $sql->fetchALL(PDO::FETCH_ASSOC);
+$reslen = count($result);
 
-var_dump($sql);
-var_dump($result);
+/*var_dump($result);
+echo"<br>";
+var_dump($reslen);*/
+
+
+for ($i=0; $i < $reslen; $i++) { 
+    echo '<div class="resultat" onclick="copyResult()">' .$result[$i]['ville_nom_reel'].'</div><br>';
+}
 
 ?>
