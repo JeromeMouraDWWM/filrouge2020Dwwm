@@ -7,7 +7,7 @@ $dbname = "exonews";
 
 try {
     $pdo = new PDO("mysql:host=$host;charset=utf8", $user, $password);
-    $bdd = "CREATE DATABASE IF NOT EXISTS exonews CHARACTER SET utf8";
+    $bdd = "CREATE DATABASE IF NOT EXISTS $dbname CHARACTER SET utf8";
     $pdo->exec($bdd);
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $user, $password);
     $table = "CREATE TABLE IF NOT EXISTS news (
@@ -21,8 +21,4 @@ try {
     echo "Erreur !: " . $e->getMessage() . "<br>";
     die();
 }
-
-$sql = $pdo->prepare("SELECT * FROM news ORDER BY id_news");
-$sql->execute();
-$listenews = $sql->fetchALL(PDO::FETCH_ASSOC);
 ?>

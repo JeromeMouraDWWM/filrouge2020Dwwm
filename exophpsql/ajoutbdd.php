@@ -17,3 +17,6 @@ $insert->execute();
 </p>
 
 <a class="btn btn-success" href="index.php" role="button">Retourner à la page d'accueil</a>
+
+</body>
+</html>

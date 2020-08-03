@@ -12,7 +12,13 @@ include'connexionbdd.php';
         <th>Supprimer</th>
     </tr>
 
-    <?php foreach ($listenews as $i){ ?>
+    <?php 
+
+    $sql = $pdo->prepare("SELECT * FROM news ORDER BY id_news");
+    $sql->execute();
+    $listenews = $sql->fetchALL(PDO::FETCH_ASSOC);
+    
+    foreach ($listenews as $i){ ?>
 
     <tr>
         <td> <?php echo $i['id_news'] ?> </td>

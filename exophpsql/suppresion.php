@@ -12,3 +12,6 @@ $sup->execute();
 <p>La news a bien été supprimé</p>
 
 <a class="btn btn-success" href="index.php" role="button">Retourner à la page d'accueil</a>
+
+</body>
+</html>

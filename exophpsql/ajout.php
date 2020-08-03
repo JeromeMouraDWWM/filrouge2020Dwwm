@@ -8,10 +8,13 @@ include'header.php';
     <input type="text" id="ftitre" name="ftitre"><br>
 
     <label for="fcontenu">Contenu :</label><br>
-    <input type="text" id="fcontenu" name="fcontenu"><br><br>
+    <input type="textarea" id="fcontenu" name="fcontenu"><br><br>
 
     <button type="submit" class="btn btn-primary">Envoyez</button>
 
 </form>
 
 <a class="btn btn-success" href="index.php" role="button">Retourner à la page d'accueil</a>
+
+</body>
+</html>

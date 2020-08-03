@@ -22,10 +22,13 @@ while ($modif = $pre_modif->fetch()){
     <input type="text" id="ftitre" name="ftitre" value="<?php echo $mtitre?>"><br>
 
     <label for="fcontenu">Contenu :</label><br>
-    <input type="text" id="fcontenu" name="fcontenu" value="<?php echo $mcontenu?>"><br><br>
+    <input type="textarea" id="fcontenu" name="fcontenu" value="<?php echo $mcontenu?>"><br><br>
 
     <button type="submit" class="btn btn-primary">Envoyez</button>
 
 </form>
 
 <a class="btn btn-success" href="index.php" role="button">Retourner à la page d'accueil</a>
+
+</body>
+</html>
