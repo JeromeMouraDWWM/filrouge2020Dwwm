@@ -3,7 +3,7 @@ include'header.php';
 include'connexionbdd.php';
 ?>
 
-<table>
+<table class="table">
     <tr>
         <th>ID</th>
         <th>Titre</th>
